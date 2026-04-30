@@ -9,223 +9,196 @@
       --primary: #2575fc;
       --accent: #e53935;
       --truth: #2e7d32;
+      --bg: #f4f7f6;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-    body { background-color: #f8f9fa; transition: background 0.3s; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: var(--bg); color: #333; transition: all 0.4s ease; }
     
-    /* Navbar & Header */
+    /* Admin Dashboard Bar */
+    .admin-bar {
+      background: #222; color: #00ff00; padding: 10px 5%; font-family: 'Courier New', monospace;
+      display: flex; justify-content: space-between; font-size: 0.9rem; border-bottom: 2px solid var(--truth);
+    }
+
     .navbar {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 1rem 5%; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 1.2rem 5%; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       position: sticky; top: 0; z-index: 1000;
     }
-    .logo-text { font-weight: bold; font-size: 1.4rem; color: var(--primary); }
+    .logo-text { font-weight: 800; font-size: 1.6rem; color: var(--primary); letter-spacing: -1px; }
     
     .truth-btn {
-      background: #333; color: white; border: none; padding: 10px 20px;
-      border-radius: 30px; cursor: pointer; font-weight: bold; transition: 0.3s;
+      background: #333; color: white; border: none; padding: 12px 24px;
+      border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
-    .truth-btn.active { background: var(--truth); box-shadow: 0 0 15px var(--truth); }
+    .truth-btn.active { background: var(--truth); box-shadow: 0 0 20px var(--truth); }
 
     .hero {
-      text-align: center; padding: 3rem 1rem;
+      text-align: center; padding: 4rem 1rem;
       background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-      color: white; transition: 0.5s;
+      color: white; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
     }
 
-    /* Produkte */
     .products {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem; padding: 2rem 5%; max-width: 1400px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem; padding: 4rem 5%; max-width: 1300px; margin: 0 auto;
     }
 
     .product-card {
-      background: white; border-radius: 15px; overflow: hidden;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.05); position: relative;
-      display: flex; flex-direction: column; transition: 0.3s;
+      background: white; border-radius: 20px; overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative;
+      display: flex; flex-direction: column; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
+    .product-card:hover { transform: translateY(-10px); }
 
-    .product-img { width: 100%; height: 230px; object-fit: cover; }
-    .product-info { padding: 1.5rem; flex-grow: 1; }
+    .product-img { width: 100%; height: 250px; object-fit: cover; background: #eee; }
+    .product-info { padding: 1.8rem; flex-grow: 1; }
 
-    /* Manipulation Elements */
-    .badge { position: absolute; top: 15px; right: 15px; background: #ff416c; color: white; padding: 5px 12px; border-radius: 20px; font-weight: bold; }
-    .discount-ribbon { position: absolute; top: 15px; left: -25px; transform: rotate(-45deg); background: #43a047; color: white; padding: 5px 40px; font-weight: bold; }
-    .old-price { text-decoration: line-through; color: #999; margin-right: 10px; }
-    .sale-price { font-size: 1.6rem; font-weight: bold; color: var(--accent); }
-    .stock-warning { color: #d32f2f; font-weight: bold; font-size: 0.85rem; margin: 10px 0; display: block; }
-    .customer-count { color: #2e7d32; font-size: 0.8rem; margin-bottom: 15px; display: block; }
+    /* Marketing Tricks */
+    .badge { position: absolute; top: 15px; right: 15px; background: var(--accent); color: white; padding: 6px 15px; border-radius: 30px; font-weight: bold; font-size: 0.8rem; z-index: 10; }
+    .discount-ribbon { position: absolute; top: 20px; left: -35px; transform: rotate(-45deg); background: #ffeb3b; color: #000; padding: 5px 45px; font-weight: 900; font-size: 0.7rem; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    .old-price { text-decoration: line-through; color: #bbb; margin-right: 10px; font-size: 1.1rem; }
+    .sale-price { font-size: 1.8rem; font-weight: 800; color: var(--accent); }
+    .stock-warning { color: #d32f2f; font-weight: bold; font-size: 0.85rem; margin: 12px 0; display: flex; align-items: center; gap: 5px; }
+    .customer-count { color: #4caf50; font-size: 0.85rem; margin-bottom: 15px; font-weight: 600; display: block; }
 
-    /* Truth Elements (Hidden by default) */
+    /* Truth Elements */
     .legal-info { 
-      display: none; background: #e8f5e9; border: 1px solid #2e7d32; 
-      padding: 1rem; margin-top: 10px; border-radius: 8px; font-size: 0.85rem; 
+      display: none; background: #f1f8e9; border-left: 5px solid var(--truth); 
+      padding: 1.2rem; margin-top: 15px; border-radius: 4px; font-size: 0.9rem; line-height: 1.4;
     }
-    .legal-title { font-weight: bold; color: #1b5e20; display: block; margin-bottom: 5px; }
+    .legal-title { font-weight: bold; color: #1b5e20; display: block; margin-bottom: 8px; text-transform: uppercase; font-size: 0.75rem; }
 
-    /* Brille Aktiviert: Manipulation verstecken, Recht anzeigen */
+    /* Mode: REVEAL TRUTH */
+    body.reveal-truth { background-color: #e8f5e9; }
     body.reveal-truth .badge, 
     body.reveal-truth .discount-ribbon, 
     body.reveal-truth .old-price, 
     body.reveal-truth .stock-warning, 
     body.reveal-truth .customer-count { display: none !important; }
-    
-    body.reveal-truth .legal-info { display: block; }
-    body.reveal-truth .hero { background: #2e7d32; }
+    body.reveal-truth .legal-info { display: block; animation: fadeIn 0.5s; }
+    body.reveal-truth .hero { background: var(--truth); }
     body.reveal-truth .sale-price { color: #333; }
+    body.reveal-truth .product-card { border: 2px solid var(--truth); }
 
-    .btn { background: var(--primary); color: white; border: none; padding: 0.8rem; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .btn { 
+      background: var(--primary); color: white; border: none; padding: 1rem; 
+      width: 100%; border-radius: 12px; cursor: pointer; font-weight: 700; 
+      transition: 0.3s; font-size: 1rem;
+    }
+    .btn:hover { background: #1a5ed8; transform: scale(1.02); }
     
     /* Cart Modal */
-    .cart-modal { position: fixed; top: 0; right: -400px; width: 400px; height: 100%; background: white; z-index: 2000; transition: 0.4s; padding: 2rem; box-shadow: -5px 0 20px rgba(0,0,0,0.1); }
+    .cart-modal { position: fixed; top: 0; right: -450px; width: 450px; height: 100%; background: white; z-index: 2000; transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1); padding: 2.5rem; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
     .cart-modal.open { right: 0; }
-    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; z-index: 1500; }
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; z-index: 1500; backdrop-filter: blur(4px); }
     .overlay.active { display: block; }
 
-    footer { background: #222; color: #888; padding: 2rem; text-align: center; }
+    footer { background: #1a1a1a; color: #666; padding: 3rem; text-align: center; margin-top: 4rem; }
   </style>
 </head>
 <body>
 
+<div class="admin-bar">
+  <span>SYSTEM: ONLINE</span>
+  <span>LIVE-UMSATZ: <span id="admin-total">0,00€</span></span>
+  <span>DEIN GEWINN: <span id="admin-profit" style="color: #00ff00;">0,00€</span></span>
+</div>
+
 <div class="navbar">
   <div class="logo-text">Bahaa's Business Lab</div>
-  <div style="display: flex; gap: 15px; align-items: center;">
-    <button class="truth-btn" onclick="toggleTruth()">VWL-Brille: Manipulation filtern 👓</button>
-    <div onclick="openCart()" style="cursor:pointer; font-size: 1.3rem;">🛒 <span id="cart-count">0</span></div>
+  <div style="display: flex; gap: 20px; align-items: center;">
+    <button class="truth-btn" onclick="toggleTruth()">👓 VWL-BRILLE AKTIVIEREN</button>
+    <div onclick="openCart()" style="cursor:pointer; font-size: 1.4rem; position: relative;">
+      🛒 <span id="cart-count" style="position:absolute; top:-10px; right:-10px; background:var(--accent); color:white; border-radius:50%; width:20px; height:20px; font-size:0.7rem; display:flex; align-items:center; justify-content:center;">0</span>
+    </div>
   </div>
 </div>
 
 <div class="overlay" onclick="closeCart()"></div>
 <div class="cart-modal" id="cart-modal">
-  <h2>Warenkorb Analyse</h2>
-  <div id="cart-items" style="margin: 20px 0;">Leer</div>
-  <p><b>Umsatz:</b> <span id="total">0,00€</span></p>
-  <p style="color: green;"><b>Dein Gewinn:</b> <span id="profit">0,00€</span></p>
-  <button class="btn" style="margin-top:20px" onclick="location.reload()">Reset</button>
+  <h2 style="margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px;">Warenkorb Analyse</h2>
+  <div id="cart-items" style="margin: 20px 0; max-height: 50vh; overflow-y: auto;">Warenkorb leer</div>
+  
+  <div style="background: #f9f9f9; padding: 20px; border-radius: 12px;">
+    <p style="display: flex; justify-content: space-between; margin-bottom: 10px;"><b>Umsatz (Kundenpreis):</b> <span id="total">0,00€</span></p>
+    <p style="display: flex; justify-content: space-between; color: var(--truth); font-size: 1.2rem;"><b>Dein Reingewinn:</b> <span id="profit">0,00€</span></p>
+  </div>
+  
+  <button class="btn" style="margin-top:20px; background: #333;" onclick="location.reload()">Shop zurücksetzen</button>
+  <button class="btn" style="margin-top:10px; background: #eee; color: #333;" onclick="closeCart()">Weiter einkaufen</button>
 </div>
 
 <section class="hero" id="hero">
-  <h1 id="hero-h1">Shop: Trend-Produkte 2026</h1>
-  <p id="hero-p">Die besten Deals - Nur heute!</p>
+  <h1 id="hero-h1" style="font-size: 3rem; margin-bottom: 1rem;">Flash Sale: Trend-Produkte 2026</h1>
+  <p id="hero-p" style="font-size: 1.2rem; opacity: 0.9;">Nur für kurze Zeit - Bis zu 70% Rabatt!</p>
 </section>
 
 <div class="products">
   <div class="product-card">
     <div class="badge">BESTSELLER</div>
-    <div class="discount-ribbon">50% OFF</div>
-    <img src="images/LED.jpg" class="product-img">
+    <div class="discount-ribbon">SALE</div>
+    <img src="images/LED.jpg" class="product-img" alt="LED Lights">
     <div class="product-info">
-      <h3>LED Ambient Lights</h3>
-      <div class="price-row"><span class="old-price">59,99€</span><span class="sale-price">29,99€</span></div>
-      <span class="stock-warning">⚠️ Nur noch 3 Stück verfügbar!</span>
-      <span class="customer-count">✓ 1.247 Kunden haben heute gekauft</span>
+      <h3>Premium LED Ambient Kit</h3>
+      <div class="price-row" style="margin-top: 10px;"><span class="old-price">59,99€</span><span class="sale-price">29,99€</span></div>
+      <span class="stock-warning">⚡ Nur noch 3 Stück zu diesem Preis!</span>
+      <span class="customer-count">🔥 1.247 Personen haben heute bestellt</span>
       
       <div class="legal-info">
-        <span class="legal-title">Rechtlicher Check: Preisangabenverordnung</span>
-        • <b>Streichpreis:</b> Unzulässig, wenn der Preis nicht innerhalb der letzten 30 Tage tatsächlich verlangt wurde.<br>
-        • <b>VWL-Aspekt:</b> Ausnutzung der Ankerheuristik zur Wert-Täuschung.<br>
-        • <b>Einkauf:</b> 4,20€ | <b>Gewinnmarge:</b> 86%
+        <span class="legal-title">VWL & RECHT ANALYSE</span>
+        • <b>Anker-Effekt:</b> Der "59,99€" Preis ist frei erfunden, um den Rabatt groß wirken zu lassen.<br>
+        • <b>Marge:</b> EK 4,20€ | VK 29,99€.<br>
+        • <b>Recht:</b> Verstoß gegen PAngV (Preisangabenverordnung).
       </div>
-      
-      <button class="btn" onclick="add(1, 'LED Lights', 29.99, 4.20, 'images/LED.jpg')">In den Warenkorb</button>
+      <button class="btn" onclick="add(1, 'LED Ambient Kit', 29.99, 4.20, 'images/LED.jpg')">In den Warenkorb</button>
     </div>
   </div>
 
   <div class="product-card">
-    <div class="badge">TOP DEAL</div>
-    <div class="discount-ribbon">60% OFF</div>
-    <img src="images/Cleaner.webp" class="product-img">
+    <div class="badge">LIMITEIRT</div>
+    <img src="images/Cleaner.webp" class="product-img" alt="Phone Cleaner">
     <div class="product-info">
       <h3>Magnetic Phone Cleaner</h3>
-      <div class="price-row"><span class="old-price">24,99€</span><span class="sale-price">13,99€</span></div>
+      <div class="price-row" style="margin-top: 10px;"><span class="old-price">24,99€</span><span class="sale-price">13,99€</span></div>
       <span class="stock-warning">⚠️ Fast ausverkauft!</span>
-      <span class="customer-count">✓ Beliebt bei Schülern (BK Schloss Neuhaus)</span>
+      <span class="customer-count">📍 Beliebt in Paderborn & Umgebung</span>
       
       <div class="legal-info">
-        <span class="legal-title">Rechtlicher Check: UWG (Unlauterer Wettbewerb)</span>
-        • <b>Fake-Knappheit:</b> Die Anzeige "Fast ausverkauft" ohne echten Lagerbezug ist eine irreführende geschäftliche Handlung (§ 5 UWG).<br>
-        • <b>Psychologie:</b> Erzeugung von "FOMO" (Fear of missing out).
+        <span class="legal-title">VWL & RECHT ANALYSE</span>
+        • <b>Künstliche Verknappung:</b> Erzeugt Handlungsdruck ohne reale Grundlage (§ 5 UWG).<br>
+        • <b>Localization:</b> "Beliebt in..." erzeugt falsches Vertrauen durch regionale Nähe.
       </div>
-      
       <button class="btn" onclick="add(2, 'Phone Cleaner', 13.99, 2.80, 'images/Cleaner.webp')">In den Warenkorb</button>
     </div>
   </div>
 
   <div class="product-card">
-    <div class="badge">NEU</div>
-    <img src="images/Earbuds.jpg" class="product-img">
+    <div class="badge">HOT</div>
+    <img src="images/Earbuds.jpg" class="product-img" alt="Earbuds">
     <div class="product-info">
-      <h3>Wireless Earbuds Pro</h3>
-      <div class="price-row"><span class="old-price">89,99€</span><span class="sale-price">53,99€</span></div>
-      <span class="stock-warning">⚠️ Nur noch 1 auf Lager!</span>
-      <span class="customer-count">✓ 3.289+ Fünf-Sterne Bewertungen</span>
+      <h3>Earbuds Pro Ultra</h3>
+      <div class="price-row" style="margin-top: 10px;"><span class="old-price">89,99€</span><span class="sale-price">53,99€</span></div>
+      <span class="stock-warning">⏰ Angebot endet in 02:45!</span>
+      <span class="customer-count">⭐ 4.9/5 Sternen (3.289 Bewertungen)</span>
       
       <div class="legal-info">
-        <span class="legal-title">Rechtlicher Check: Omnibus-Richtlinie (EU)</span>
-        • <b>Bewertungen:</b> Seit 2022 müssen Händler angeben, ob und wie sie prüfen, dass Bewertungen von echten Käufern stammen.<br>
-        • <b>Importrisiko:</b> Produkthaftung liegt beim Importeur (dir), nicht beim Hersteller in China.
+        <span class="legal-title">VWL & RECHT ANALYSE</span>
+        • <b>Social Proof:</b> Gefälschte Rezensionen sind seit 2022 strenger reguliert (EU Omnibus-Richtlinie).<br>
+        • <b>Produkthaftung:</b> Als Dropshipper bist DU rechtlich der Hersteller/Importeur!
       </div>
-      
       <button class="btn" onclick="add(3, 'Earbuds Pro', 53.99, 8.75, 'images/Earbuds.jpg')">In den Warenkorb</button>
-    </div>
-  </div>
-
-  <div class="product-card">
-    <img src="images/ResistanceBands.jpg" class="product-img">
-    <div class="product-info">
-      <h3>Fitness Resistance Bands</h3>
-      <div class="price-row"><span class="old-price">49,99€</span><span class="sale-price">22,49€</span></div>
-      <span class="stock-warning">⚠️ Aktion endet in 02:45 min!</span>
-      
-      <div class="legal-info">
-        <span class="legal-title">Rechtlicher Check: Zeitdruck-Täuschung</span>
-        • <b>Countdown-Timer:</b> Ein ablaufender Timer, der nach Neuladen der Seite von vorne beginnt, ist laut Verbraucherschutz wettbewerbswidrig.<br>
-        • <b>Kosten:</b> Einkauf 3,95€. Mitschüler zahlen 470% Aufschlag.
-      </div>
-      
-      <button class="btn" onclick="add(4, 'Bands', 22.49, 3.95, 'images/ResistanceBands.jpg')">In den Warenkorb</button>
-    </div>
-  </div>
-
-  <div class="product-card">
-    <div class="badge">TREND</div>
-    <img src="images/X1-black-2.webp" class="product-img">
-    <div class="product-info">
-      <h3>Smart Watch X1</h3>
-      <div class="price-row"><span class="old-price">149,99€</span><span class="sale-price">84,49€</span></div>
-      <span class="customer-count">✓ Kostenloser Expressversand heute</span>
-      
-      <div class="legal-info">
-        <span class="legal-title">Rechtlicher Check: Lieferfristen & Zoll</span>
-        • <b>Dropshipping-Falle:</b> Kunden müssen über lange Lieferwege (China) und mögliche Zollgebühren/Einfuhrumsatzsteuer vorab klar informiert werden.<br>
-        • <b>CE-Kennzeichnung:</b> Fehlt diese bei Elektronik, darf das Produkt in der EU nicht verkauft werden.
-      </div>
-      
-      <button class="btn" onclick="add(5, 'Smart Watch', 84.49, 12.50, 'images/X1-black-2.webp')">In den Warenkorb</button>
-    </div>
-  </div>
-
-  <div class="product-card">
-    <img src="images/Bemader.webp" class="product-img">
-    <div class="product-info">
-      <h3>Mini Projector HD</h3>
-      <div class="price-row"><span class="old-price">129,99€</span><span class="sale-price">79,99€</span></div>
-      <span class="stock-warning">⚠️ Geringer Bestand!</span>
-      
-      <div class="legal-info">
-        <span class="legal-title">Rechtlicher Check: Widerrufsrecht</span>
-        • <b>Retouren:</b> Du kannst Retouren nach China nicht erzwingen. Der Kunde hat ein Recht auf eine Rücksendeadresse innerhalb der EU.<br>
-        • <b>Gewährleistung:</b> 2 Jahre gesetzliche Mängelhaftung muss der Verkäufer garantieren.
-      </div>
-      
-      <button class="btn" onclick="add(6, 'Projector', 79.99, 28.50, 'images/Bemader.webp')">In den Warenkorb</button>
     </div>
   </div>
 </div>
 
 <footer>
-  <p>&copy; 2026 Bahaa - VWL Lernmodul | Berufskolleg Schloß Neuhaus</p>
+  <p><b>Bahaa's Business Lab</b></p>
+  <p style="font-size: 0.8rem; margin-top: 10px;">Interaktives Lernmodul für das Berufskolleg Schloß Neuhaus &copy; 2026</p>
 </footer>
 
 <script>
@@ -240,15 +213,15 @@
     const p = document.getElementById('hero-p');
 
     if(isTruth) {
-      btn.innerText = "Manipulation anzeigen 😈";
+      btn.innerText = "😈 MANIPULATION ANZEIGEN";
       btn.classList.add('active');
-      h1.innerText = "VWL-Analyse: Die nackten Zahlen";
-      p.innerText = "Alle psychologischen Filter wurden entfernt.";
+      h1.innerText = "VWL-Analyse: Die nackte Wahrheit";
+      p.innerText = "Psychologische Trigger entfernt. Kostenstrukturen offengelegt.";
     } else {
-      btn.innerText = "VWL-Brille: Manipulation filtern 👓";
+      btn.innerText = "👓 VWL-BRILLE AKTIVIEREN";
       btn.classList.remove('active');
-      h1.innerText = "Shop: Trend-Produkte 2026";
-      p.innerText = "Die besten Deals - Nur heute!";
+      h1.innerText = "Flash Sale: Trend-Produkte 2026";
+      p.innerText = "Nur für kurze Zeit - Bis zu 70% Rabatt!";
     }
   }
 
@@ -256,6 +229,9 @@
     let item = cart.find(i => i.id === id);
     if(item) item.qty++; else cart.push({id, name, price, cost, img, qty: 1});
     update();
+    // Kleiner visueller Effekt beim Hinzufügen
+    document.getElementById('cart-count').style.transform = "scale(1.5)";
+    setTimeout(() => document.getElementById('cart-count').style.transform = "scale(1)", 200);
   }
 
   function update() {
@@ -264,15 +240,22 @@
       total += i.price * i.qty;
       profit += (i.price - i.cost) * i.qty;
       count += i.qty;
-      html += `<div style="display:flex; gap:10px; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;">
-                <img src="${i.img}" width="40" height="40" style="object-fit:cover">
-                <span>${i.qty}x ${i.name}</span>
-              </div>`;
+      html += `
+        <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px; background:#f5f5f5; padding:10px; border-radius:10px;">
+          <img src="${i.img}" width="50" height="50" style="object-fit:cover; border-radius:5px;">
+          <div style="flex-grow:1">
+            <div style="font-weight:bold">${i.name}</div>
+            <div style="font-size:0.8rem; color:#666">${i.qty}x ${i.price.toFixed(2)}€</div>
+          </div>
+          <div style="font-weight:bold; color:var(--truth)">+${((i.price - i.cost)*i.qty).toFixed(2)}€</div>
+        </div>`;
     });
     document.getElementById('cart-count').innerText = count;
     document.getElementById('cart-items').innerHTML = html || 'Warenkorb leer';
     document.getElementById('total').innerText = total.toFixed(2).replace('.', ',') + '€';
     document.getElementById('profit').innerText = profit.toFixed(2).replace('.', ',') + '€';
+    document.getElementById('admin-total').innerText = total.toFixed(2).replace('.', ',') + '€';
+    document.getElementById('admin-profit').innerText = profit.toFixed(2).replace('.', ',') + '€';
   }
 
   function openCart() { document.getElementById('cart-modal').classList.add('open'); document.querySelector('.overlay').classList.add('active'); }
