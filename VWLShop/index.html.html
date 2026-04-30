@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bahaa's Business Lab - VWL Edition</title>
+  <style>
+    :root {
+      --primary: #2575fc;
+      --accent: #e53935;
+      --truth: #2e7d32;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    body { background-color: #f8f9fa; transition: background 0.3s; }
+    
+    /* Navbar & Header */
+    .navbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 5%; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky; top: 0; z-index: 1000;
+    }
+    .logo-text { font-weight: bold; font-size: 1.4rem; color: var(--primary); }
+    
+    .truth-btn {
+      background: #333; color: white; border: none; padding: 10px 20px;
+      border-radius: 30px; cursor: pointer; font-weight: bold; transition: 0.3s;
+    }
+    .truth-btn.active { background: var(--truth); box-shadow: 0 0 15px var(--truth); }
+
+    .hero {
+      text-align: center; padding: 3rem 1rem;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      color: white; transition: 0.5s;
+    }
+
+    /* Produkte */
+    .products {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem; padding: 2rem 5%; max-width: 1400px; margin: 0 auto;
+    }
+
+    .product-card {
+      background: white; border-radius: 15px; overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05); position: relative;
+      display: flex; flex-direction: column; transition: 0.3s;
+    }
+
+    .product-img { width: 100%; height: 230px; object-fit: cover; }
+    .product-info { padding: 1.5rem; flex-grow: 1; }
+
+    /* Manipulation Elements */
+    .badge { position: absolute; top: 15px; right: 15px; background: #ff416c; color: white; padding: 5px 12px; border-radius: 20px; font-weight: bold; }
+    .discount-ribbon { position: absolute; top: 15px; left: -25px; transform: rotate(-45deg); background: #43a047; color: white; padding: 5px 40px; font-weight: bold; }
+    .old-price { text-decoration: line-through; color: #999; margin-right: 10px; }
+    .sale-price { font-size: 1.6rem; font-weight: bold; color: var(--accent); }
+    .stock-warning { color: #d32f2f; font-weight: bold; font-size: 0.85rem; margin: 10px 0; display: block; }
+    .customer-count { color: #2e7d32; font-size: 0.8rem; margin-bottom: 15px; display: block; }
+
+    /* Truth Elements (Hidden by default) */
+    .legal-info { 
+      display: none; background: #e8f5e9; border: 1px solid #2e7d32; 
+      padding: 1rem; margin-top: 10px; border-radius: 8px; font-size: 0.85rem; 
+    }
+    .legal-title { font-weight: bold; color: #1b5e20; display: block; margin-bottom: 5px; }
+
+    /* Brille Aktiviert: Manipulation verstecken, Recht anzeigen */
+    body.reveal-truth .badge, 
+    body.reveal-truth .discount-ribbon, 
+    body.reveal-truth .old-price, 
+    body.reveal-truth .stock-warning, 
+    body.reveal-truth .customer-count { display: none !important; }
+    
+    body.reveal-truth .legal-info { display: block; }
+    body.reveal-truth .hero { background: #2e7d32; }
+    body.reveal-truth .sale-price { color: #333; }
+
+    .btn { background: var(--primary); color: white; border: none; padding: 0.8rem; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; }
+    
+    /* Cart Modal */
+    .cart-modal { position: fixed; top: 0; right: -400px; width: 400px; height: 100%; background: white; z-index: 2000; transition: 0.4s; padding: 2rem; box-shadow: -5px 0 20px rgba(0,0,0,0.1); }
+    .cart-modal.open { right: 0; }
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; z-index: 1500; }
+    .overlay.active { display: block; }
+
+    footer { background: #222; color: #888; padding: 2rem; text-align: center; }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo-text">Bahaa's Business Lab</div>
+  <div style="display: flex; gap: 15px; align-items: center;">
+    <button class="truth-btn" onclick="toggleTruth()">VWL-Brille: Manipulation filtern 👓</button>
+    <div onclick="openCart()" style="cursor:pointer; font-size: 1.3rem;">🛒 <span id="cart-count">0</span></div>
+  </div>
+</div>
+
+<div class="overlay" onclick="closeCart()"></div>
+<div class="cart-modal" id="cart-modal">
+  <h2>Warenkorb Analyse</h2>
+  <div id="cart-items" style="margin: 20px 0;">Leer</div>
+  <p><b>Umsatz:</b> <span id="total">0,00€</span></p>
+  <p style="color: green;"><b>Dein Gewinn:</b> <span id="profit">0,00€</span></p>
+  <button class="btn" style="margin-top:20px" onclick="location.reload()">Reset</button>
+</div>
+
+<section class="hero" id="hero">
+  <h1 id="hero-h1">Shop: Trend-Produkte 2026</h1>
+  <p id="hero-p">Die besten Deals - Nur heute!</p>
+</section>
+
+<div class="products">
+  <div class="product-card">
+    <div class="badge">BESTSELLER</div>
+    <div class="discount-ribbon">50% OFF</div>
+    <img src="images/LED.jpg" class="product-img">
+    <div class="product-info">
+      <h3>LED Ambient Lights</h3>
+      <div class="price-row"><span class="old-price">59,99€</span><span class="sale-price">29,99€</span></div>
+      <span class="stock-warning">⚠️ Nur noch 3 Stück verfügbar!</span>
+      <span class="customer-count">✓ 1.247 Kunden haben heute gekauft</span>
+      
+      <div class="legal-info">
+        <span class="legal-title">Rechtlicher Check: Preisangabenverordnung</span>
+        • <b>Streichpreis:</b> Unzulässig, wenn der Preis nicht innerhalb der letzten 30 Tage tatsächlich verlangt wurde.<br>
+        • <b>VWL-Aspekt:</b> Ausnutzung der Ankerheuristik zur Wert-Täuschung.<br>
+        • <b>Einkauf:</b> 4,20€ | <b>Gewinnmarge:</b> 86%
+      </div>
+      
+      <button class="btn" onclick="add(1, 'LED Lights', 29.99, 4.20, 'images/LED.jpg')">In den Warenkorb</button>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="badge">TOP DEAL</div>
+    <div class="discount-ribbon">60% OFF</div>
+    <img src="images/Cleaner.webp" class="product-img">
+    <div class="product-info">
+      <h3>Magnetic Phone Cleaner</h3>
+      <div class="price-row"><span class="old-price">24,99€</span><span class="sale-price">13,99€</span></div>
+      <span class="stock-warning">⚠️ Fast ausverkauft!</span>
+      <span class="customer-count">✓ Beliebt bei Schülern (BK Schloss Neuhaus)</span>
+      
+      <div class="legal-info">
+        <span class="legal-title">Rechtlicher Check: UWG (Unlauterer Wettbewerb)</span>
+        • <b>Fake-Knappheit:</b> Die Anzeige "Fast ausverkauft" ohne echten Lagerbezug ist eine irreführende geschäftliche Handlung (§ 5 UWG).<br>
+        • <b>Psychologie:</b> Erzeugung von "FOMO" (Fear of missing out).
+      </div>
+      
+      <button class="btn" onclick="add(2, 'Phone Cleaner', 13.99, 2.80, 'images/Cleaner.webp')">In den Warenkorb</button>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="badge">NEU</div>
+    <img src="images/Earbuds.jpg" class="product-img">
+    <div class="product-info">
+      <h3>Wireless Earbuds Pro</h3>
+      <div class="price-row"><span class="old-price">89,99€</span><span class="sale-price">53,99€</span></div>
+      <span class="stock-warning">⚠️ Nur noch 1 auf Lager!</span>
+      <span class="customer-count">✓ 3.289+ Fünf-Sterne Bewertungen</span>
+      
+      <div class="legal-info">
+        <span class="legal-title">Rechtlicher Check: Omnibus-Richtlinie (EU)</span>
+        • <b>Bewertungen:</b> Seit 2022 müssen Händler angeben, ob und wie sie prüfen, dass Bewertungen von echten Käufern stammen.<br>
+        • <b>Importrisiko:</b> Produkthaftung liegt beim Importeur (dir), nicht beim Hersteller in China.
+      </div>
+      
+      <button class="btn" onclick="add(3, 'Earbuds Pro', 53.99, 8.75, 'images/Earbuds.jpg')">In den Warenkorb</button>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="images/ResistanceBands.jpg" class="product-img">
+    <div class="product-info">
+      <h3>Fitness Resistance Bands</h3>
+      <div class="price-row"><span class="old-price">49,99€</span><span class="sale-price">22,49€</span></div>
+      <span class="stock-warning">⚠️ Aktion endet in 02:45 min!</span>
+      
+      <div class="legal-info">
+        <span class="legal-title">Rechtlicher Check: Zeitdruck-Täuschung</span>
+        • <b>Countdown-Timer:</b> Ein ablaufender Timer, der nach Neuladen der Seite von vorne beginnt, ist laut Verbraucherschutz wettbewerbswidrig.<br>
+        • <b>Kosten:</b> Einkauf 3,95€. Mitschüler zahlen 470% Aufschlag.
+      </div>
+      
+      <button class="btn" onclick="add(4, 'Bands', 22.49, 3.95, 'images/ResistanceBands.jpg')">In den Warenkorb</button>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="badge">TREND</div>
+    <img src="images/X1-black-2.webp" class="product-img">
+    <div class="product-info">
+      <h3>Smart Watch X1</h3>
+      <div class="price-row"><span class="old-price">149,99€</span><span class="sale-price">84,49€</span></div>
+      <span class="customer-count">✓ Kostenloser Expressversand heute</span>
+      
+      <div class="legal-info">
+        <span class="legal-title">Rechtlicher Check: Lieferfristen & Zoll</span>
+        • <b>Dropshipping-Falle:</b> Kunden müssen über lange Lieferwege (China) und mögliche Zollgebühren/Einfuhrumsatzsteuer vorab klar informiert werden.<br>
+        • <b>CE-Kennzeichnung:</b> Fehlt diese bei Elektronik, darf das Produkt in der EU nicht verkauft werden.
+      </div>
+      
+      <button class="btn" onclick="add(5, 'Smart Watch', 84.49, 12.50, 'images/X1-black-2.webp')">In den Warenkorb</button>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="images/Bemader.webp" class="product-img">
+    <div class="product-info">
+      <h3>Mini Projector HD</h3>
+      <div class="price-row"><span class="old-price">129,99€</span><span class="sale-price">79,99€</span></div>
+      <span class="stock-warning">⚠️ Geringer Bestand!</span>
+      
+      <div class="legal-info">
+        <span class="legal-title">Rechtlicher Check: Widerrufsrecht</span>
+        • <b>Retouren:</b> Du kannst Retouren nach China nicht erzwingen. Der Kunde hat ein Recht auf eine Rücksendeadresse innerhalb der EU.<br>
+        • <b>Gewährleistung:</b> 2 Jahre gesetzliche Mängelhaftung muss der Verkäufer garantieren.
+      </div>
+      
+      <button class="btn" onclick="add(6, 'Projector', 79.99, 28.50, 'images/Bemader.webp')">In den Warenkorb</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 Bahaa - VWL Lernmodul | Berufskolleg Schloß Neuhaus</p>
+</footer>
+
+<script>
+  let cart = [];
+  let isTruth = false;
+
+  function toggleTruth() {
+    isTruth = !isTruth;
+    document.body.classList.toggle('reveal-truth');
+    const btn = document.querySelector('.truth-btn');
+    const h1 = document.getElementById('hero-h1');
+    const p = document.getElementById('hero-p');
+
+    if(isTruth) {
+      btn.innerText = "Manipulation anzeigen 😈";
+      btn.classList.add('active');
+      h1.innerText = "VWL-Analyse: Die nackten Zahlen";
+      p.innerText = "Alle psychologischen Filter wurden entfernt.";
+    } else {
+      btn.innerText = "VWL-Brille: Manipulation filtern 👓";
+      btn.classList.remove('active');
+      h1.innerText = "Shop: Trend-Produkte 2026";
+      p.innerText = "Die besten Deals - Nur heute!";
+    }
+  }
+
+  function add(id, name, price, cost, img) {
+    let item = cart.find(i => i.id === id);
+    if(item) item.qty++; else cart.push({id, name, price, cost, img, qty: 1});
+    update();
+  }
+
+  function update() {
+    let total = 0, profit = 0, count = 0, html = '';
+    cart.forEach(i => {
+      total += i.price * i.qty;
+      profit += (i.price - i.cost) * i.qty;
+      count += i.qty;
+      html += `<div style="display:flex; gap:10px; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;">
+                <img src="${i.img}" width="40" height="40" style="object-fit:cover">
+                <span>${i.qty}x ${i.name}</span>
+              </div>`;
+    });
+    document.getElementById('cart-count').innerText = count;
+    document.getElementById('cart-items').innerHTML = html || 'Warenkorb leer';
+    document.getElementById('total').innerText = total.toFixed(2).replace('.', ',') + '€';
+    document.getElementById('profit').innerText = profit.toFixed(2).replace('.', ',') + '€';
+  }
+
+  function openCart() { document.getElementById('cart-modal').classList.add('open'); document.querySelector('.overlay').classList.add('active'); }
+  function closeCart() { document.getElementById('cart-modal').classList.remove('open'); document.querySelector('.overlay').classList.remove('active'); }
+</script>
+
+</body>
+</html>
