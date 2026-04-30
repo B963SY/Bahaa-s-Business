@@ -8,110 +8,111 @@
   <style>
     :root {
       --primary: #2563eb;
-      --primary-dark: #1e40af;
       --accent: #ef4444;
-      --truth: #10b981;
-      --bg-light: #f8fafc;
+      --truth: #059669;
+      --bg-light: #f1f5f9;
       --card-bg: #ffffff;
-      --text-main: #1e293b;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background-color: var(--bg-light); color: var(--text-main); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+    body { background-color: var(--bg-light); color: #1e293b; font-family: 'Inter', sans-serif; }
 
-    /* Dashboard für den Lehrer */
+    /* Lehrer-Dashboard */
     .admin-dashboard {
       background: #0f172a; color: #38bdf8; padding: 12px 5%; font-family: 'JetBrains Mono', monospace;
-      display: flex; justify-content: space-between; border-bottom: 2px solid var(--primary);
-      position: sticky; top: 0; z-index: 2000; font-size: 0.85rem;
+      display: flex; justify-content: space-between; position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid var(--primary);
     }
-    .admin-stats span { color: #f0f9ff; font-weight: bold; }
 
     header {
       background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-      color: white; padding: 60px 5% 100px; text-align: center;
-      clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+      color: white; padding: 60px 5% 100px; text-align: center; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
     }
 
     .shop-container {
       max-width: 1400px; margin: -60px auto 50px; padding: 0 5%;
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 30px;
     }
 
     /* Produkt-Karte */
     .p-card {
       background: var(--card-bg); border-radius: 24px; overflow: hidden;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.05); position: relative;
-      transition: all 0.4s ease; border: 1px solid transparent; display: flex; flex-direction: column;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05); position: relative; transition: 0.3s;
+      display: flex; flex-direction: column; border: 1px solid #e2e8f0;
     }
-    .p-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
 
-    .p-img-box { position: relative; height: 240px; overflow: hidden; background: #f1f5f9; }
+    .p-img-box { height: 220px; background: #f8fafc; }
     .p-img { width: 100%; height: 100%; object-fit: cover; }
 
-    .badge { position: absolute; top: 15px; right: 15px; background: var(--accent); color: white; padding: 6px 14px; border-radius: 50px; font-weight: bold; font-size: 0.75rem; }
+    .badge { position: absolute; top: 15px; right: 15px; background: var(--accent); color: white; padding: 6px 12px; border-radius: 50px; font-weight: bold; font-size: 0.7rem; }
     .p-info { padding: 25px; flex-grow: 1; }
-    
-    .price-tag { display: flex; align-items: baseline; gap: 10px; margin-bottom: 15px; }
-    .old-p { text-decoration: line-through; color: #94a3b8; font-size: 1.1rem; }
-    .new-p { color: var(--accent); font-size: 2rem; font-weight: 800; }
+    .price-tag { margin-bottom: 15px; }
+    .old-p { text-decoration: line-through; color: #94a3b8; font-size: 1rem; margin-right: 8px; }
+    .new-p { color: var(--accent); font-size: 1.8rem; font-weight: 800; }
 
-    /* Truth Layer (VWL-Brille) */
+    /* VWL-ANALYSE BOX */
     .truth-overlay {
-      display: none; background: #ecfdf5; padding: 20px;
-      border-top: 2px dashed var(--truth); animation: slideIn 0.3s ease-out;
+      display: none; background: #f0fdf4; padding: 20px; border-top: 2px dashed var(--truth);
+      margin-top: 15px; border-radius: 12px;
     }
-    @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .truth-title { color: var(--truth); font-weight: 800; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 10px; display: block; letter-spacing: 1px; }
     
-    .truth-header { color: #065f46; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 10px; }
-    .truth-text { font-size: 0.85rem; line-height: 1.5; color: #064e3b; }
+    .analysis-grid { font-size: 0.85rem; line-height: 1.5; color: #064e3b; }
+    .analysis-item { margin-bottom: 10px; border-bottom: 1px solid #dcfce7; padding-bottom: 8px; }
+    .analysis-item:last-child { border-bottom: none; }
+    .analysis-item b { color: #166534; display: block; margin-bottom: 2px; }
 
+    /* Brillen-Schalter */
     .glass-toggle {
-      background: #f1f5f9; color: #475569; border: none; padding: 10px;
+      background: #f1f5f9; color: #475569; border: none; padding: 12px;
       border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 0.8rem;
-      margin-top: 15px; width: 100%; transition: 0.3s;
+      margin-top: 15px; width: 100%; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;
     }
     .glass-toggle.active { background: var(--truth); color: white; }
 
-    .p-card.reveal-truth { border-color: var(--truth); background: #f0fff4; }
+    .p-card.reveal-truth { border-color: var(--truth); background: #f8fafc; }
     .p-card.reveal-truth .truth-overlay { display: block; }
     .p-card.reveal-truth .badge, .p-card.reveal-truth .old-p { display: none; }
 
-    .buy-btn { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 14px; width: 100%; font-weight: 700; cursor: pointer; margin-top: 10px; }
+    .buy-btn { background: var(--primary); color: white; border: none; padding: 14px; border-radius: 12px; width: 100%; font-weight: 700; cursor: pointer; margin-top: 10px; }
 
-    /* Modal & Cart */
-    .cart-btn { position: fixed; bottom: 30px; right: 30px; background: white; width: 70px; height: 70px; border-radius: 50%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; border: none; z-index: 1000; }
-    .cart-count { position: absolute; top: 0; right: 0; background: var(--accent); color: white; border-radius: 50%; width: 25px; height: 25px; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; }
+    /* Warenkorb-Modal */
+    .cart-btn { position: fixed; bottom: 30px; right: 30px; background: white; width: 65px; height: 65px; border-radius: 50%; box-shadow: 0 10px 30px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; cursor: pointer; border: none; z-index: 1000; }
+    .cart-count { position: absolute; top: 0; right: 0; background: var(--accent); color: white; border-radius: 50%; width: 22px; height: 22px; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; }
 
-    .modal { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); display: none; z-index: 3000; align-items: center; justify-content: center; }
-    .modal-content { background: white; width: 90%; max-width: 500px; border-radius: 30px; padding: 40px; }
+    .modal { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(5px); display: none; z-index: 3000; align-items: center; justify-content: center; }
+    .modal-content { background: white; width: 90%; max-width: 450px; border-radius: 24px; padding: 35px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
   </style>
 </head>
 <body>
 
 <div class="admin-dashboard">
-  <div>● BK_NEUHAUS_LAB_v2.0</div>
-  <div class="admin-stats">Umsatz: <span id="adm-rev">0,00€</span> | Profit: <span id="adm-pro" style="color: #4ade80;">0,00€</span></div>
+  <div><span style="color:var(--primary)">●</span> Business_Lab_Control</div>
+  <div id="stats">Umsatz: <b>0,00€</b> | Profit: <b style="color:#4ade80;">0,00€</b></div>
 </div>
 
 <header>
-  <h1>Bahaa's Business Lab</h1>
-  <p>VWL-Analyse: Wie Märkte wirklich funktionieren</p>
+  <h1 style="font-size: 2.5rem; font-weight: 800;">Bahaa's Business Lab</h1>
+  <p>Digitale Marktstrukturen & Verhaltensökonomik</p>
 </header>
 
 <div class="shop-container">
+  
   <div class="p-card" id="p1">
     <div class="badge">BESTSELLER</div>
     <div class="p-img-box"><img src="images/LED.jpg" class="p-img"></div>
     <div class="p-info">
-      <h3 class="p-title">RGB Ambient Pro Kit</h3>
+      <h3>RGB Ambient Kit Pro</h3>
       <div class="price-tag"><span class="old-p">69,99€</span><span class="new-p">29,99€</span></div>
       <div class="truth-overlay">
-        <div class="truth-header">VWL-Check: Ankerheuristik</div>
-        <p class="truth-text"><b>Effekt:</b> Der fiktive Preis von 69,99€ dient als "Anker", um die 29,99€ extrem günstig wirken zu lassen. <b>Marge:</b> EK 4,20€ (China). Profit: <b>25,79€</b>.</p>
+        <span class="truth-title">VWL-Brille: Preispsychologie</span>
+        <div class="analysis-grid">
+          <div class="analysis-item"><b>Ankerheuristik:</b> Der Streichpreis von 69,99€ setzt einen künstlichen Wertanker. Der Kunde bewertet den Preisnachlass (40€), nicht den absoluten Wert der Ware.</div>
+          <div class="analysis-item"><b>Margen-Check:</b> Einkauf (China): 4,20€. Brutto-Marge: 86%.</div>
+          <div class="analysis-item"><b>Marktform:</b> Anbieter nutzt Informationsasymmetrie (Kunde kennt den Weltmarktpreis nicht).</div>
+        </div>
       </div>
-      <button class="buy-btn" onclick="addToCart('LED Kit', 29.99, 4.20)">In den Warenkorb</button>
-      <button class="glass-toggle" onclick="toggleTruth(1)">👓 VWL-Brille aufsetzen</button>
+      <button class="buy-btn" onclick="add('LED Kit', 29.99, 4.20)">In den Warenkorb</button>
+      <button class="glass-toggle" onclick="toggle(1)">👓 VWL-Analyse aktivieren</button>
     </div>
   </div>
 
@@ -119,115 +120,139 @@
     <div class="badge">LIMITIERT</div>
     <div class="p-img-box"><img src="images/Cleaner.webp" class="p-img"></div>
     <div class="p-info">
-      <h3 class="p-title">Magnetic Phone Cleaner</h3>
-      <div class="price-tag"><span class="old-p">24,99€</span><span class="new-p">14,99€</span></div>
+      <h3>Magnetic Phone Cleaner</h3>
+      <div class="price-tag"><span class="old-p">24,95€</span><span class="new-p">14,99€</span></div>
       <div class="truth-overlay">
-        <div class="truth-header">Recht: Künstliche Knappheit</div>
-        <p class="truth-text"><b>UWG-Check:</b> Das Vortäuschen einer Knappheit ("Nur noch 3") verstößt gegen <b>§ 5 UWG</b> (Irreführung). <b>EK:</b> 2,80€. Reingewinn pro Stück: 12,19€.</p>
+        <span class="truth-title">VWL-Brille: Künstliche Verknappung</span>
+        <div class="analysis-grid">
+          <div class="analysis-item"><b>Nudging:</b> "Fast ausverkauft" erzeugt Handlungsdruck. Dies schaltet das rationale Denken (Vergleich von Alternativen) aus.</div>
+          <div class="analysis-item"><b>Recht (UWG):</b> Vortäuschen einer Knappheit verstößt gegen § 5 UWG (Irreführung).</div>
+          <div class="analysis-item"><b>Kosten:</b> EK 2,80€. Dein Profit: 12,19€ pro Verkauf.</div>
+        </div>
       </div>
-      <button class="buy-btn" onclick="addToCart('Phone Cleaner', 14.99, 2.80)">In den Warenkorb</button>
-      <button class="glass-toggle" onclick="toggleTruth(2)">👓 VWL-Brille aufsetzen</button>
+      <button class="buy-btn" onclick="add('Phone Cleaner', 14.99, 2.80)">In den Warenkorb</button>
+      <button class="glass-toggle" onclick="toggle(2)">👓 VWL-Analyse aktivieren</button>
     </div>
   </div>
 
   <div class="p-card" id="p3">
-    <div class="badge">HOT</div>
+    <div class="badge">SOCIAL TREND</div>
     <div class="p-img-box"><img src="images/Earbuds.jpg" class="p-img"></div>
     <div class="p-info">
-      <h3 class="p-title">Wireless Earbuds Pro</h3>
-      <div class="price-tag"><span class="old-p">89,99€</span><span class="new-p">44,99€</span></div>
+      <h3>Earbuds Pro Ultra</h3>
+      <div class="price-tag"><span class="old-p">89,90€</span><span class="new-p">44,99€</span></div>
       <div class="truth-overlay">
-        <div class="truth-header">VWL: Social Proof</div>
-        <p class="truth-text"><b>Effekt:</b> Gefälschte Sterne-Rankings nutzen den Herdentrieb. <b>Haftung:</b> Als Dropshipper bist du rechtlich der <b>Inverkehrbringer</b> und haftest voll für Schäden.</p>
+        <span class="truth-title">VWL-Brille: Herdentrieb</span>
+        <div class="analysis-grid">
+          <div class="analysis-item"><b>Social Proof:</b> Kundenbewertungen suggerieren hohe Qualität. In der VWL nennt man das "Bandwagon-Effekt" (Mitläufereffekt).</div>
+          <div class="analysis-item"><b>Risiko-Allokation:</b> Als Dropshipper bist DU rechtlich der Hersteller (Inverkehrbringer). Bei Akku-Brand haftest DU mit deinem Privatvermögen.</div>
+          <div class="analysis-item"><b>Margen-Killer:</b> Retouren-Kosten sind hier das größte Risiko.</div>
+        </div>
       </div>
-      <button class="buy-btn" onclick="addToCart('Earbuds Pro', 44.99, 8.75)">In den Warenkorb</button>
-      <button class="glass-toggle" onclick="toggleTruth(3)">👓 VWL-Brille aufsetzen</button>
+      <button class="buy-btn" onclick="add('Earbuds Pro', 44.99, 8.75)">In den Warenkorb</button>
+      <button class="glass-toggle" onclick="toggle(3)">👓 VWL-Analyse aktivieren</button>
     </div>
   </div>
 
   <div class="p-card" id="p4">
     <div class="p-img-box"><img src="images/ResistanceBands.jpg" class="p-img"></div>
     <div class="p-info">
-      <h3 class="p-title">Fitness Resistance Bands</h3>
-      <div class="price-tag"><span class="old-p">49,99€</span><span class="new-p">22,49€</span></div>
+      <h3>Fitness Resistance Bands</h3>
+      <div class="price-tag"><span class="old-p">49,00€</span><span class="new-p">19,95€</span></div>
       <div class="truth-overlay">
-        <div class="truth-header">Marketing: Zeitdruck</div>
-        <p class="truth-text"><b>Nudging:</b> Ein künstlicher Countdown zwingt das Gehirn in den "Panic Mode". <b>VWL:</b> Reduzierung der Markttransparenz durch Zeitnot. <b>EK:</b> 3,95€.</p>
+        <span class="truth-title">VWL-Brille: Zeitpräferenz</span>
+        <div class="analysis-grid">
+          <div class="analysis-item"><b>Zeitdruck:</b> Ein künstlicher Timer führt dazu, dass der Barwert des Genusses (haben wollen) höher bewertet wird als der rationale Preisvergleich.</div>
+          <div class="analysis-item"><b>Produktzyklus:</b> Günstiger Billig-Import (EK 3,95€), der auf einen kurzfristigen Fitnesstrend aufspringt.</div>
+          <div class="analysis-item"><b>Transparenz:</b> Der Markt ist unvollkommen, da Qualitätsunterschiede online nicht prüfbar sind.</div>
+        </div>
       </div>
-      <button class="buy-btn" onclick="addToCart('Fitness Bands', 22.49, 3.95)">In den Warenkorb</button>
-      <button class="glass-toggle" onclick="toggleTruth(4)">👓 VWL-Brille aufsetzen</button>
+      <button class="buy-btn" onclick="add('Resistance Bands', 19.95, 3.95)">In den Warenkorb</button>
+      <button class="glass-toggle" onclick="toggle(4)">👓 VWL-Analyse aktivieren</button>
     </div>
   </div>
 
   <div class="p-card" id="p5">
-    <div class="badge">TREND</div>
+    <div class="badge">PREMIUM</div>
     <div class="p-img-box"><img src="images/X1-black-2.webp" class="p-img"></div>
     <div class="p-info">
-      <h3 class="p-title">Smart Watch X1</h3>
-      <div class="price-tag"><span class="old-p">149,99€</span><span class="new-p">84,49€</span></div>
+      <h3>Smart Watch X1 Gen 2</h3>
+      <div class="price-tag"><span class="old-p">159,00€</span><span class="new-p">79,99€</span></div>
       <div class="truth-overlay">
-        <div class="truth-header">VWL: Informationsasymmetrie</div>
-        <p class="truth-text"><b>Problem:</b> Der Käufer kennt den wahren Wert (EK 12,50€) nicht. Du nutzt deinen Wissensvorsprung aus. <b>Zoll:</b> Versteckte Kosten für den Endkunden möglich.</p>
+        <span class="truth-title">VWL-Brille: Informations-Asymmetrie</span>
+        <div class="analysis-grid">
+          <div class="analysis-item"><b>Hidden Costs:</b> Der Händler "vergisst" oft den Hinweis auf Einfuhrumsatzsteuer und Zoll.</div>
+          <div class="analysis-item"><b>Qualitäts-Signaling:</b> Das Design kopiert teure Marken, um deren Qualitätsversprechen ohne deren F&E-Kosten zu nutzen.</div>
+          <div class="analysis-item"><b>Marge:</b> EK 12,50€. Enormes Potenzial für Marketing-Ausgaben (Influencer).</div>
+        </div>
       </div>
-      <button class="buy-btn" onclick="addToCart('Smart Watch', 84.49, 12.50)">In den Warenkorb</button>
-      <button class="glass-toggle" onclick="toggleTruth(5)">👓 VWL-Brille aufsetzen</button>
+      <button class="buy-btn" onclick="add('Smart Watch X1', 79.99, 12.50)">In den Warenkorb</button>
+      <button class="glass-toggle" onclick="toggle(5)">👓 VWL-Analyse aktivieren</button>
     </div>
   </div>
 
   <div class="p-card" id="p6">
     <div class="p-img-box"><img src="images/Bemader.webp" class="p-img"></div>
     <div class="p-info">
-      <h3 class="p-title">Mini Projector HD</h3>
-      <div class="price-tag"><span class="old-p">129,99€</span><span class="new-p">79,99€</span></div>
+      <h3>Cinema HD Mini Projector</h3>
+      <div class="price-tag"><span class="old-p">129,99€</span><span class="new-p">64,95€</span></div>
       <div class="truth-overlay">
-        <div class="truth-header">Recht: Widerrufsfalle</div>
-        <p class="truth-text"><b>Wichtig:</b> Viele Dropshipper verweigern Retouren nach China. Rechtlich muss die Retourenadresse jedoch in der EU liegen (Verbraucherschutzrichtlinie).</p>
+        <span class="truth-title">VWL-Brille: Recht & Ethik</span>
+        <div class="analysis-grid">
+          <div class="analysis-item"><b>Widerruf:</b> Viele Händler verlangen Retouren nach China (Kosten > Warenwert). Dies hebelt faktisch das 14-tägige Widerrufsrecht aus.</div>
+          <div class="analysis-item"><b>Technische Spezifikation:</b> "HD" ist oft nur interpoliert. Ein klassischer Fall von Fehlallokation durch falsche Werbeversprechen.</div>
+          <div class="analysis-item"><b>EK:</b> 28,50€. Profit: 36,45€.</div>
+        </div>
       </div>
-      <button class="buy-btn" onclick="addToCart('Mini Projector', 79.99, 28.50)">In den Warenkorb</button>
-      <button class="glass-toggle" onclick="toggleTruth(6)">👓 VWL-Brille aufsetzen</button>
+      <button class="buy-btn" onclick="add('Mini Projector', 64.95, 28.50)">In den Warenkorb</button>
+      <button class="glass-toggle" onclick="toggle(6)">👓 VWL-Analyse aktivieren</button>
     </div>
   </div>
+
 </div>
 
-<button class="cart-btn" onclick="openModal()">🛒 <span class="cart-count" id="cart-count">0</span></button>
+<button class="cart-btn" onclick="openM()">🛒 <span class="cart-count" id="count">0</span></button>
 
-<div class="modal" id="modal">
+<div class="modal" id="mod">
   <div class="modal-content">
-    <h2 style="margin-bottom:20px;">Lab-Ergebnis</h2>
-    <div id="cart-items" style="margin-bottom:20px; font-size:0.9rem; color:#64748b;"></div>
-    <div style="background:#f1f5f9; padding:20px; border-radius:15px;">
-      <p>Gesamt-Umsatz: <b id="total-rev">0,00€</b></p>
-      <p style="color:var(--truth);">Dein Netto-Profit: <b id="total-pro">0,00€</b></p>
+    <h2 style="font-weight:800; margin-bottom:20px;">Lab-Zusammenfassung</h2>
+    <div id="items" style="margin-bottom:20px; font-size:0.9rem; color:#475569;">Warenkorb leer</div>
+    <div style="background:#f1f5f9; padding:20px; border-radius:15px; border:1px solid #e2e8f0;">
+      <p style="display:flex; justify-content:space-between; margin-bottom:5px;">Umsatz (Brutto): <b id="rev">0,00€</b></p>
+      <p style="display:flex; justify-content:space-between; color:var(--truth);">Dein Netto-Profit: <b id="pro">0,00€</b></p>
     </div>
-    <button class="buy-btn" style="background:#0f172a; margin-top:20px;" onclick="location.reload()">Reset</button>
-    <button class="buy-btn" style="background:#e2e8f0; color:#0f172a;" onclick="closeModal()">Weiter analysieren</button>
+    <button class="buy-btn" style="background:#0f172a; margin-top:20px;" onclick="location.reload()">Szenario Reset</button>
+    <button class="buy-btn" style="background:#f1f5f9; color:#1e293b; margin-top:10px;" onclick="closeM()">Weiter Einkaufen</button>
   </div>
 </div>
 
 <script>
   let cart = [];
-  function toggleTruth(id) {
+  function toggle(id) {
     const card = document.getElementById('p' + id);
     card.classList.toggle('reveal-truth');
     const btn = card.querySelector('.glass-toggle');
+    btn.innerText = card.classList.contains('reveal-truth') ? "👓 Analyse ausblenden" : "👓 VWL-Analyse aktivieren";
     btn.classList.toggle('active');
-    btn.innerText = card.classList.contains('reveal-truth') ? "👓 Manipulation erkannt" : "👓 VWL-Brille aufsetzen";
   }
 
-  function addToCart(name, price, cost) {
+  function add(name, price, cost) {
     cart.push({name, price, cost});
-    let rev = 0, pro = 0;
-    cart.forEach(i => { rev += i.price; pro += (i.price - i.cost); });
-    document.getElementById('cart-count').innerText = cart.length;
-    document.getElementById('adm-rev').innerText = rev.toFixed(2) + "€";
-    document.getElementById('adm-pro').innerText = pro.toFixed(2) + "€";
-    document.getElementById('total-rev').innerText = rev.toFixed(2) + "€";
-    document.getElementById('total-pro').innerText = pro.toFixed(2) + "€";
-    document.getElementById('cart-items').innerHTML = cart.map(i => `• ${i.name}`).join('<br>');
+    update();
   }
 
-  function openModal() { document.getElementById('modal').style.display = "flex"; }
-  function closeModal() { document.getElementById('modal').style.display = "none"; }
+  function update() {
+    let r = 0, p = 0;
+    cart.forEach(i => { r += i.price; p += (i.price - i.cost); });
+    document.getElementById('count').innerText = cart.length;
+    document.getElementById('rev').innerText = r.toFixed(2) + "€";
+    document.getElementById('pro').innerText = p.toFixed(2) + "€";
+    document.getElementById('stats').innerHTML = `Umsatz: <b>${r.toFixed(2)}€</b> | Profit: <b style="color:#4ade80;">${p.toFixed(2)}€</b>`;
+    document.getElementById('items').innerHTML = cart.map(i => `• ${i.name} (${i.price}€)`).join('<br>');
+  }
+
+  function openM() { document.getElementById('mod').style.display = "flex"; }
+  function closeM() { document.getElementById('mod').style.display = "none"; }
 </script>
 
 </body>
