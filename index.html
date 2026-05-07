@@ -52,15 +52,14 @@
     .urgency { color: #dc2626; font-weight: 700; display: block; margin-bottom: 4px; }
     .reviews { color: #f59e0b; font-weight: 600; display: block; }
 
-    /* VWL-ANALYSE BOX */
     .truth-overlay {
       display: none; background: #f0fdf4; padding: 20px; border-top: 2px dashed var(--truth);
       margin-top: 15px; border-radius: 12px;
     }
     .truth-title { color: var(--truth); font-weight: 800; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 10px; display: block; }
     
-    .analysis-item { margin-bottom: 10px; font-size: 0.85rem; color: #064e3b; line-height: 1.4; }
-    .analysis-item b { color: #166534; display: block; }
+    .analysis-item { margin-bottom: 12px; font-size: 0.8rem; color: #064e3b; line-height: 1.4; }
+    .analysis-item b { color: #166534; display: block; font-size: 0.85rem; margin-bottom: 2px; }
 
     .glass-toggle {
       background: #f1f5f9; color: #475569; border: none; padding: 12px;
@@ -78,7 +77,7 @@
     .cart-count { position: absolute; top: 0; right: 0; background: var(--accent); color: white; border-radius: 50%; width: 22px; height: 22px; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; }
 
     .modal { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(5px); display: none; z-index: 3000; align-items: center; justify-content: center; }
-    .modal-content { background: white; width: 90%; max-width: 450px; border-radius: 24px; padding: 35px; }
+    .modal-content { background: white; width: 90%; max-width: 450px; border-radius: 24px; padding: 35px; max-height: 80vh; overflow-y: auto; }
   </style>
 </head>
 <body>
@@ -106,9 +105,10 @@
         <span class="reviews">⭐⭐⭐⭐⭐ (1.247 Bewertungen)</span>
       </div>
       <div class="truth-overlay">
-        <span class="truth-title">VWL-Analyse: Anker-Effekt</span>
-        <div class="analysis-item"><b>Die Falle:</b> Der hohe Streichpreis (69,99€) setzt einen "Anker". Wir denken, wir sparen 40€, dabei ist das Produkt nie teurer als 30€ gewesen.</div>
-        <div class="analysis-item"><b>Manipulation:</b> Die 1.247 Bewertungen sind ein Fake-"Social Proof", um Vertrauen vorzutäuschen.</div>
+        <span class="truth-title">VWL & RECHT: Anker-Effekt & Irreführung</span>
+        <div class="analysis-item"><b>Die Falle:</b> Der "Streichpreis" (69,99€) dient als kognitiver Anker. Käufer berechnen den Wert relativ zum hohen Preis statt absolut.</div>
+        <div class="analysis-item"><b>Illegalität (§ 11 PAngV):</b> Laut Preisangabenverordnung muss der Streichpreis der niedrigste Preis der letzten 30 Tage sein. "Mondpreise", die nie verlangt wurden, sind unlauter.</div>
+        <div class="analysis-item"><b>Manipulation:</b> Fake-Bewertungen verstoßen gegen <b>§ 5b Abs. 3 UWG</b>, wenn sie nicht auf echten Erfahrungen basieren.</div>
       </div>
       <button class="buy-btn" onclick="add('LED Kit', 29.99, 4.20)">In den Warenkorb</button>
       <button class="glass-toggle" onclick="toggle(1)">👓 VWL-Brille aufsetzen</button>
@@ -126,9 +126,10 @@
         <span class="reviews">⭐⭐⭐⭐⭐ (856 Bewertungen)</span>
       </div>
       <div class="truth-overlay">
-        <span class="truth-title">VWL-Analyse: Fake Knappheit</span>
-        <div class="analysis-item"><b>Die Falle:</b> Der Countdown erzeugt künstlichen Zeitdruck. Wir treffen impulsive Entscheidungen, um den "Deal" nicht zu verpassen.</div>
-        <div class="analysis-item"><b>Manipulation:</b> Es gibt kein echtes Zeitlimit. Die Aktion läuft bei jedem Seitenaufruf neu ab (FOMO-Effekt).</div>
+        <span class="truth-title">VWL & RECHT: Künstliche Knappheit</span>
+        <div class="analysis-item"><b>Die Falle:</b> Zeitdruck (Scarcity) schaltet das rationale Denken aus und aktiviert das Belohnungssystem (Reaktanz-Theorie).</div>
+        <div class="analysis-item"><b>Illegalität (§ 5 UWG):</b> Irreführende Zeitangaben sind verboten. Wenn ein "Tagesangebot" am nächsten Tag zum selben Preis existiert, ist es unlauter.</div>
+        <div class="analysis-item"><b>Verstoß:</b> Es handelt sich um eine "aggressive Geschäftspraktik", da der Verbraucher durch künstlichen Druck zu einer Entscheidung genötigt wird.</div>
       </div>
       <button class="buy-btn" onclick="add('Cleaner', 14.99, 2.80)">In den Warenkorb</button>
       <button class="glass-toggle" onclick="toggle(2)">👓 VWL-Brille aufsetzen</button>
@@ -146,9 +147,10 @@
         <span class="reviews">⭐⭐⭐⭐⭐ (3.289 Bewertungen)</span>
       </div>
       <div class="truth-overlay">
-        <span class="truth-title">VWL-Analyse: Herdentrieb</span>
-        <div class="analysis-item"><b>Die Falle:</b> "14 Personen schauen gerade" ist ein Fake-Skript. Es soll uns vorgaukeln, dass das Produkt extrem begehrt ist.</div>
-        <div class="analysis-item"><b>Zahlen:</b> Einkauf in China: 8,75€. Der Gewinn ist fast 4x so hoch wie der Warenwert.</div>
+        <span class="truth-title">VWL & RECHT: Social Proof / Herdentrieb</span>
+        <div class="analysis-item"><b>Die Falle:</b> Menschen orientieren sich in unsicheren Situationen an anderen (Bandwagon-Effekt).</div>
+        <div class="analysis-item"><b>Illegalität (§ 5 UWG):</b> Die Anzeige "14 Personen schauen gerade" ist oft ein zufallsgeneriertes Skript. Falsche Tatsachenbehauptungen über die Beliebtheit sind irreführend und abmahnfähig.</div>
+        <div class="analysis-item"><b>VWL-Fakt:</b> Arbitrage-Handel. Einkauf in China für 8,75€. Der Preis wird durch Marketing-Psychologie künstlich aufgebläht.</div>
       </div>
       <button class="buy-btn" onclick="add('Earbuds', 44.99, 8.75)">In den Warenkorb</button>
       <button class="glass-toggle" onclick="toggle(3)">👓 VWL-Brille aufsetzen</button>
@@ -165,9 +167,10 @@
         <span class="reviews">⭐⭐⭐⭐⭐ (512 Bewertungen)</span>
       </div>
       <div class="truth-overlay">
-        <span class="truth-title">VWL-Analyse: Framing</span>
-        <div class="analysis-item"><b>Die Falle:</b> Die "Gratislieferung" wird als Geschenk präsentiert, dabei ist sie bereits im hohen Verkaufspreis (EK 3,95€) einkalkuliert.</div>
-        <div class="analysis-item"><b>Manipulation:</b> Wir bewerten den "Gratis-Vorteil" höher als den eigentlichen Preisvergleich.</div>
+        <span class="truth-title">VWL & RECHT: Framing & Täuschung</span>
+        <div class="analysis-item"><b>Die Falle:</b> "Gratis" löst den Zero-Price-Effect aus. Wir ignorieren die überhöhten Grundkosten (EK 3,95€).</div>
+        <div class="analysis-item"><b>Illegalität:</b> Laut <b>UWG</b> darf Werbung mit "Gratis" nicht erfolgen, wenn die Kosten der Lieferung über die tatsächlichen Portokosten hinaus im Produktpreis versteckt wurden.</div>
+        <div class="analysis-item"><b>Info:</b> Der Verkäufer nutzt "Preistransparenz-Mangel", da der Kunde den geringen Materialwert (Latex-Mischung) nicht einschätzen kann.</div>
       </div>
       <button class="buy-btn" onclick="add('Bands', 19.95, 3.95)">In den Warenkorb</button>
       <button class="glass-toggle" onclick="toggle(4)">👓 VWL-Brille aufsetzen</button>
@@ -185,9 +188,10 @@
         <span class="reviews">⭐⭐⭐⭐⭐ (2.104 Bewertungen)</span>
       </div>
       <div class="truth-overlay">
-        <span class="truth-title">VWL-Analyse: Design-Kopie</span>
-        <div class="analysis-item"><b>Die Falle:</b> Das Design kopiert teure Luxusmarken (Apple/Samsung). Wir übertragen unser Vertrauen in die Marke auf dieses Billig-Produkt.</div>
-        <div class="analysis-item"><b>F&E-Raub:</b> Der Anbieter spart Millionen an Forschungskosten durch simples Kopieren der Optik.</div>
+        <span class="truth-title">VWL & RECHT: Imagetransfer & Schutzrechte</span>
+        <div class="analysis-item"><b>Die Falle:</b> Halo-Effekt. Die Ähnlichkeit zu Apple/Samsung lässt uns glauben, die Qualität sei vergleichbar.</div>
+        <div class="analysis-item"><b>Illegalität (UWG / DesignG):</b> Sklavische Nachahmung, die zu Herkunftstäuschung führt, ist verboten. Das Design verletzt gewerbliche Schutzrechte.</div>
+        <div class="analysis-item"><b>Marktversagen:</b> Der Anbieter nutzt Informationsasymmetrie. Der Kunde kann die Technik im Inneren (billigste Chipsätze) nicht prüfen.</div>
       </div>
       <button class="buy-btn" onclick="add('Smart Watch', 79.99, 12.50)">In den Warenkorb</button>
       <button class="glass-toggle" onclick="toggle(5)">👓 VWL-Brille aufsetzen</button>
@@ -204,9 +208,10 @@
         <span class="reviews">⭐⭐⭐⭐⭐ (942 Bewertungen)</span>
       </div>
       <div class="truth-overlay">
-        <span class="truth-title">VWL-Analyse: Informationsvorsprung</span>
-        <div class="analysis-item"><b>Die Falle:</b> "Zentrallager" klingt professionell, das Produkt wird aber einzeln aus Asien verschickt.</div>
-        <div class="analysis-item"><b>Transparenz:</b> Der Kunde hat keine Markttransparenz und glaubt den falschen Bestandsanzeigen.</div>
+        <span class="truth-title">VWL & RECHT: Dropshipping-Lüge</span>
+        <div class="analysis-item"><b>Die Falle:</b> "Zentrallager" suggeriert schnelle Lieferung und lokale Präsenz (Trust-Building).</div>
+        <div class="analysis-item"><b>Illegalität (§ 5 UWG):</b> Irreführung über die geografische Herkunft und Lieferzeit. Tatsächlich erfolgt der Versand oft per Einzelpaket aus Asien (Dropshipping).</div>
+        <div class="analysis-item"><b>Problem:</b> Der Verbraucher wird über seine Rechte (Rücksendekosten nach China!) im Unklaren gelassen. Fehlendes Impressum wäre ein weiterer Verstoß.</div>
       </div>
       <button class="buy-btn" onclick="add('Projector', 64.95, 28.50)">In den Warenkorb</button>
       <button class="glass-toggle" onclick="toggle(6)">👓 VWL-Brille aufsetzen</button>
@@ -225,6 +230,9 @@
       <p style="display:flex; justify-content:space-between;">Umsatz: <b id="rev">0,00€</b></p>
       <p style="display:flex; justify-content:space-between; color:var(--truth);">Händler-Profit: <b id="pro">0,00€</b></p>
     </div>
+    <p style="font-size: 0.7rem; color: #94a3b8; margin-top: 15px;">
+      * Hinweis: In der Realität würden hier noch Steuern, Werbekosten (Facebook/TikTok Ads) und Versand abgezogen. Der "reine" Profit bleibt dennoch oft massiv überhöht durch psychologische Preissetzung.
+    </p>
     <button class="buy-btn" style="background:#0f172a; margin-top:20px;" onclick="location.reload()">Lab Reset</button>
     <button class="buy-btn" style="background:#f1f5f9; color:#1e293b; margin-top:10px;" onclick="closeM()">Schließen</button>
   </div>
@@ -255,7 +263,6 @@
   }
 
   function openM() { document.getElementById('mod').style.display = "flex"; }
-  function closeModal() { document.getElementById('mod').style.display = "none"; }
   function closeM() { document.getElementById('mod').style.display = "none"; }
 </script>
 
