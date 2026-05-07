@@ -1,415 +1,262 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bahaa's Business Lab | Manipulation Edition</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
-  <style>
-  :root {
-    --primary: #3b82f6;       /* Etwas helleres Blau für Kontrast */
-    --accent: #ff4d4d;        /* Leuchtendes Rot */
-    --truth: #10b981;         /* Kräftiges Grün für die Analyse */
-    --bg-dark: #0f172a;       /* Sehr dunkles Blau/Schwarz */
-    --card-bg: #1e293b;       /* Dunkles Grau-Blau für Karten */
-    --text-main: #f1f5f9;     /* Fast weißer Text */
-    --text-muted: #94a3b8;    /* Grauer Text für weniger Wichtiges */
-    --border: #334155;        /* Subtile Trennlinien */
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bahaa's Business Lab | Manipulation Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --accent: #ef4444;
+      --truth: #059669;
+      --bg-light: #f1f5f9;
+      --card-bg: #ffffff;
+    }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  
-  body { 
-    background-color: var(--bg-dark); 
-    color: var(--text-main); 
-    font-family: 'Inter', sans-serif; 
-  }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background-color: var(--bg-light); color: #1e293b; font-family: 'Inter', sans-serif; }
 
-  .admin-dashboard {
-    background: #020617; 
-    color: #38bdf8; 
-    padding: 12px 5%; 
-    font-family: 'JetBrains Mono', monospace;
-    display: flex; 
-    justify-content: space-between; 
-    position: sticky; 
-    top: 0; 
-    z-index: 2000; 
-    border-bottom: 1px solid var(--primary);
-  }
+    .admin-dashboard {
+      background: #0f172a; color: #38bdf8; padding: 12px 5%; font-family: 'JetBrains Mono', monospace;
+      display: flex; justify-content: space-between; position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid var(--primary);
+    }
 
-  header {
-    background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%);
-    color: white; 
-    padding: 60px 5% 100px; 
-    text-align: center; 
-    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
-  }
+    header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      color: white; padding: 60px 5% 100px; text-align: center; clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+    }
 
-  .shop-container {
-    max-width: 1400px; 
-    margin: -60px auto 50px; 
-    padding: 0 5%;
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); 
-    gap: 30px;
-  }
+    .shop-container {
+      max-width: 1400px; margin: -60px auto 50px; padding: 0 5%;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 30px;
+    }
 
-  .p-card {
-    background: var(--card-bg); 
-    border-radius: 24px; 
-    overflow: hidden;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3); 
-    position: relative; 
-    transition: 0.3s;
-    display: flex; 
-    flex-direction: column; 
-    border: 1px solid var(--border);
-  }
+    .p-card {
+      background: var(--card-bg); border-radius: 24px; overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05); position: relative; transition: 0.3s;
+      display: flex; flex-direction: column; border: 1px solid #e2e8f0;
+    }
 
-  .p-card:hover {
-    border-color: var(--primary);
-    transform: translateY(-5px);
-  }
+    .p-img-box { height: 220px; background: #f8fafc; }
+    .p-img { width: 100%; height: 100%; object-fit: cover; }
 
-  .p-img-box { 
-    height: 220px; 
-    background: #0f172a; /* Dunklerer Hintergrund für Bilder */
-  }
-  
-  .p-img { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    opacity: 0.9; /* Leicht abgedunkelt für Dark Mode Ästhetik */
-  }
+    .badge { position: absolute; top: 15px; right: 15px; background: var(--accent); color: white; padding: 6px 12px; border-radius: 50px; font-weight: bold; font-size: 0.7rem; }
+    .p-info { padding: 25px; flex-grow: 1; }
+    
+    .price-tag { margin-bottom: 10px; }
+    .old-p { text-decoration: line-through; color: #94a3b8; font-size: 1rem; margin-right: 8px; }
+    .new-p { color: var(--accent); font-size: 1.8rem; font-weight: 800; }
 
-  .badge { 
-    position: absolute; 
-    top: 15px; 
-    right: 15px; 
-    background: var(--accent); 
-    color: white; 
-    padding: 6px 12px; 
-    border-radius: 50px; 
-    font-weight: bold; 
-    font-size: 0.7rem; 
-    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
-  }
+    .fake-elements { font-size: 0.85rem; margin-bottom: 15px; }
+    .urgency { color: #dc2626; font-weight: 700; display: block; margin-bottom: 4px; }
+    .reviews { color: #f59e0b; font-weight: 600; display: block; }
 
-  .p-info { padding: 25px; flex-grow: 1; }
-  
-  .price-tag { margin-bottom: 10px; }
-  .old-p { text-decoration: line-through; color: var(--text-muted); font-size: 1rem; margin-right: 8px; }
-  .new-p { color: #f87171; font-size: 1.8rem; font-weight: 800; }
+    /* VWL-ANALYSE BOX */
+    .truth-overlay {
+      display: none; background: #f0fdf4; padding: 20px; border-top: 2px dashed var(--truth);
+      margin-top: 15px; border-radius: 12px;
+    }
+    .truth-title { color: var(--truth); font-weight: 800; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 10px; display: block; }
+    
+    .analysis-item { margin-bottom: 10px; font-size: 0.85rem; color: #064e3b; line-height: 1.4; }
+    .analysis-item b { color: #166534; display: block; }
 
-  .fake-elements { font-size: 0.85rem; margin-bottom: 15px; }
-  .urgency { color: #fbbf24; font-weight: 700; display: block; margin-bottom: 4px; }
-  .reviews { color: #fbbf24; font-weight: 600; display: block; }
+    .glass-toggle {
+      background: #f1f5f9; color: #475569; border: none; padding: 12px;
+      border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 0.8rem;
+      margin-top: 15px; width: 100%; transition: 0.3s;
+    }
+    .glass-toggle.active { background: var(--truth); color: white; }
 
-  /* VWL-ANALYSE BOX DARK */
-  .truth-overlay {
-    display: none; 
-    background: #064e3b; /* Dunkles Grün */
-    padding: 20px; 
-    border-top: 2px dashed var(--truth);
-    margin-top: 15px; 
-    border-radius: 12px;
-  }
-  
-  .truth-title { 
-    color: #34d399; 
-    font-weight: 800; 
-    font-size: 0.75rem; 
-    text-transform: uppercase; 
-    margin-bottom: 10px; 
-    display: block; 
-  }
-  
-  .analysis-item { 
-    margin-bottom: 10px; 
-    font-size: 0.85rem; 
-    color: #ecfdf5; 
-    line-height: 1.4; 
-  }
-  
-  .analysis-item b { 
-    color: var(--truth); 
-    display: block; 
-  }
+    .p-card.reveal-truth .truth-overlay { display: block; }
+    .p-card.reveal-truth .badge, .p-card.reveal-truth .old-p, .p-card.reveal-truth .fake-elements { display: none; }
 
-  .glass-toggle {
-    background: #334155; 
-    color: #e2e8f0; 
-    border: none; 
-    padding: 12px;
-    border-radius: 12px; 
-    cursor: pointer; 
-    font-weight: 600; 
-    font-size: 0.8rem;
-    margin-top: 15px; 
-    width: 100%; 
-    transition: 0.3s;
-  }
-  
-  .glass-toggle:hover {
-    background: #475569;
-  }
+    .buy-btn { background: var(--primary); color: white; border: none; padding: 14px; border-radius: 12px; width: 100%; font-weight: 700; cursor: pointer; margin-top: 10px; }
 
-  .glass-toggle.active { 
-    background: var(--truth); 
-    color: white; 
-  }
+    .cart-btn { position: fixed; bottom: 30px; right: 30px; background: white; width: 65px; height: 65px; border-radius: 50%; box-shadow: 0 10px 30px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; cursor: pointer; border: none; z-index: 1000; }
+    .cart-count { position: absolute; top: 0; right: 0; background: var(--accent); color: white; border-radius: 50%; width: 22px; height: 22px; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; }
 
-  .p-card.reveal-truth .truth-overlay { display: block; }
-  .p-card.reveal-truth .badge, 
-  .p-card.reveal-truth .old-p, 
-  .p-card.reveal-truth .fake-elements { display: none; }
-
-  .buy-btn { 
-    background: var(--primary); 
-    color: white; 
-    border: none; 
-    padding: 14px; 
-    border-radius: 12px; 
-    width: 100%; 
-    font-weight: 700; 
-    cursor: pointer; 
-    margin-top: 10px; 
-    transition: 0.2s;
-  }
-  
-  .buy-btn:hover {
-    background: #2563eb;
-    filter: brightness(1.1);
-  }
-
-  .cart-btn { 
-    position: fixed; 
-    bottom: 30px; 
-    right: 30px; 
-    background: var(--primary); 
-    color: white;
-    width: 65px; 
-    height: 65px; 
-    border-radius: 50%; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-size: 1.4rem; 
-    cursor: pointer; 
-    border: none; 
-    z-index: 1000; 
-  }
-
-  .modal { 
-    position: fixed; 
-    inset: 0; 
-    background: rgba(2, 6, 23, 0.85); 
-    backdrop-filter: blur(8px); 
-    display: none; 
-    z-index: 3000; 
-    align-items: center; 
-    justify-content: center; 
-  }
-  
-  .modal-content { 
-    background: var(--card-bg); 
-    width: 90%; 
-    max-width: 450px; 
-    border-radius: 24px; 
-    padding: 35px; 
-    border: 1px solid var(--border);
-    color: var(--text-main);
-  }
-
-  .modal-content h2 { color: white; }
-  
-  .modal-summary-box {
-    background: #0f172a; 
-    padding: 20px; 
-    border-radius: 15px;
-    border: 1px solid var(--border);
-  }
-</style>
+    .modal { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(5px); display: none; z-index: 3000; align-items: center; justify-content: center; }
+    .modal-content { background: white; width: 90%; max-width: 450px; border-radius: 24px; padding: 35px; }
+  </style>
 </head>
 <body>
 
 <div class="admin-dashboard">
-  <div><span style="color:var(--primary)">●</span> Business_Lab_LIVE</div>
-  <div id="stats">Umsatz: <b>0,00€</b> | Profit: <b style="color:#4ade80;">0,00€</b></div>
+  <div><span style="color:var(--primary)">●</span> Business_Lab_LIVE</div>
+  <div id="stats">Umsatz: <b>0,00€</b> | Profit: <b style="color:#4ade80;">0,00€</b></div>
 </div>
 
 <header>
-  <h1>Bahaa's Business Lab</h1>
-  <p>Analyse von Verkaufspsychologie & Markt-Manipulation</p>
+  <h1>Bahaa's Business Lab</h1>
+  <p>Analyse von Verkaufspsychologie & Markt-Manipulation</p>
 </header>
 
 <div class="shop-container">
-  
-  <div class="p-card" id="p1">
-    <div class="badge">SALE -57%</div>
-    <div class="p-img-box"><img src="images/LED.jpg" class="p-img"></div>
-    <div class="p-info">
-      <h3>RGB Ambient Kit</h3>
-      <div class="price-tag"><span class="old-p">69,99€</span><span class="new-p">29,99€</span></div>
-      <div class="fake-elements">
-        <span class="urgency">⚠️ Fast ausverkauft: Nur noch 3 Stück!</span>
-        <span class="reviews">⭐⭐⭐⭐⭐ (1.247 Bewertungen)</span>
-      </div>
-      <div class="truth-overlay">
-        <span class="truth-title">VWL-Analyse: Anker-Effekt</span>
-        <div class="analysis-item"><b>Die Falle:</b> Der hohe Streichpreis (69,99€) setzt einen "Anker". Wir denken, wir sparen 40€, dabei ist das Produkt nie teurer als 30€ gewesen.</div>
-        <div class="analysis-item"><b>Manipulation:</b> Die 1.247 Bewertungen sind ein Fake-"Social Proof", um Vertrauen vorzutäuschen.</div>
-      </div>
-      <button class="buy-btn" onclick="add('LED Kit', 29.99, 4.20)">In den Warenkorb</button>
-      <button class="glass-toggle" onclick="toggle(1)">👓 VWL-Brille aufsetzen</button>
-    </div>
-  </div>
+  
+  <div class="p-card" id="p1">
+    <div class="badge">SALE -57%</div>
+    <div class="p-img-box"><img src="images/LED.jpg" class="p-img"></div>
+    <div class="p-info">
+      <h3>RGB Ambient Kit</h3>
+      <div class="price-tag"><span class="old-p">69,99€</span><span class="new-p">29,99€</span></div>
+      <div class="fake-elements">
+        <span class="urgency">⚠️ Fast ausverkauft: Nur noch 3 Stück!</span>
+        <span class="reviews">⭐⭐⭐⭐⭐ (1.247 Bewertungen)</span>
+      </div>
+      <div class="truth-overlay">
+        <span class="truth-title">VWL-Analyse: Anker-Effekt</span>
+        <div class="analysis-item"><b>Die Falle:</b> Der hohe Streichpreis (69,99€) setzt einen "Anker". Wir denken, wir sparen 40€, dabei ist das Produkt nie teurer als 30€ gewesen.</div>
+        <div class="analysis-item"><b>Manipulation:</b> Die 1.247 Bewertungen sind ein Fake-"Social Proof", um Vertrauen vorzutäuschen.</div>
+      </div>
+      <button class="buy-btn" onclick="add('LED Kit', 29.99, 4.20)">In den Warenkorb</button>
+      <button class="glass-toggle" onclick="toggle(1)">👓 VWL-Brille aufsetzen</button>
+    </div>
+  </div>
 
-  <div class="p-card" id="p2">
-    <div class="badge">NUR HEUTE</div>
-    <div class="p-img-box"><img src="images/Cleaner.webp" class="p-img"></div>
-    <div class="p-info">
-      <h3>Magnetic Phone Cleaner</h3>
-      <div class="price-tag"><span class="old-p">24,95€</span><span class="new-p">14,99€</span></div>
-      <div class="fake-elements">
-        <span class="urgency">⚡ Aktion endet in 04:12 Min!</span>
-        <span class="reviews">⭐⭐⭐⭐⭐ (856 Bewertungen)</span>
-      </div>
-      <div class="truth-overlay">
-        <span class="truth-title">VWL-Analyse: Fake Knappheit</span>
-        <div class="analysis-item"><b>Die Falle:</b> Der Countdown erzeugt künstlichen Zeitdruck. Wir treffen impulsive Entscheidungen, um den "Deal" nicht zu verpassen.</div>
-        <div class="analysis-item"><b>Manipulation:</b> Es gibt kein echtes Zeitlimit. Die Aktion läuft bei jedem Seitenaufruf neu ab (FOMO-Effekt).</div>
-      </div>
-      <button class="buy-btn" onclick="add('Cleaner', 14.99, 2.80)">In den Warenkorb</button>
-      <button class="glass-toggle" onclick="toggle(2)">👓 VWL-Brille aufsetzen</button>
-    </div>
-  </div>
+  <div class="p-card" id="p2">
+    <div class="badge">NUR HEUTE</div>
+    <div class="p-img-box"><img src="images/Cleaner.webp" class="p-img"></div>
+    <div class="p-info">
+      <h3>Magnetic Phone Cleaner</h3>
+      <div class="price-tag"><span class="old-p">24,95€</span><span class="new-p">14,99€</span></div>
+      <div class="fake-elements">
+        <span class="urgency">⚡ Aktion endet in 04:12 Min!</span>
+        <span class="reviews">⭐⭐⭐⭐⭐ (856 Bewertungen)</span>
+      </div>
+      <div class="truth-overlay">
+        <span class="truth-title">VWL-Analyse: Fake Knappheit</span>
+        <div class="analysis-item"><b>Die Falle:</b> Der Countdown erzeugt künstlichen Zeitdruck. Wir treffen impulsive Entscheidungen, um den "Deal" nicht zu verpassen.</div>
+        <div class="analysis-item"><b>Manipulation:</b> Es gibt kein echtes Zeitlimit. Die Aktion läuft bei jedem Seitenaufruf neu ab (FOMO-Effekt).</div>
+      </div>
+      <button class="buy-btn" onclick="add('Cleaner', 14.99, 2.80)">In den Warenkorb</button>
+      <button class="glass-toggle" onclick="toggle(2)">👓 VWL-Brille aufsetzen</button>
+    </div>
+  </div>
 
-  <div class="p-card" id="p3">
-    <div class="badge">BESTSELLER</div>
-    <div class="p-img-box"><img src="images/Earbuds.jpg" class="p-img"></div>
-    <div class="p-info">
-      <h3>Earbuds Pro Ultra</h3>
-      <div class="price-tag"><span class="old-p">89,90€</span><span class="new-p">44,99€</span></div>
-      <div class="fake-elements">
-        <span class="urgency">🔥 14 Personen schauen gerade dieses Produkt an!</span>
-        <span class="reviews">⭐⭐⭐⭐⭐ (3.289 Bewertungen)</span>
-      </div>
-      <div class="truth-overlay">
-        <span class="truth-title">VWL-Analyse: Herdentrieb</span>
-        <div class="analysis-item"><b>Die Falle:</b> "14 Personen schauen gerade" ist ein Fake-Skript. Es soll uns vorgaukeln, dass das Produkt extrem begehrt ist.</div>
-        <div class="analysis-item"><b>Zahlen:</b> Einkauf in China: 8,75€. Der Gewinn ist fast 4x so hoch wie der Warenwert.</div>
-      </div>
-      <button class="buy-btn" onclick="add('Earbuds', 44.99, 8.75)">In den Warenkorb</button>
-      <button class="glass-toggle" onclick="toggle(3)">👓 VWL-Brille aufsetzen</button>
-    </div>
-  </div>
+  <div class="p-card" id="p3">
+    <div class="badge">BESTSELLER</div>
+    <div class="p-img-box"><img src="images/Earbuds.jpg" class="p-img"></div>
+    <div class="p-info">
+      <h3>Earbuds Pro Ultra</h3>
+      <div class="price-tag"><span class="old-p">89,90€</span><span class="new-p">44,99€</span></div>
+      <div class="fake-elements">
+        <span class="urgency">🔥 14 Personen schauen gerade dieses Produkt an!</span>
+        <span class="reviews">⭐⭐⭐⭐⭐ (3.289 Bewertungen)</span>
+      </div>
+      <div class="truth-overlay">
+        <span class="truth-title">VWL-Analyse: Herdentrieb</span>
+        <div class="analysis-item"><b>Die Falle:</b> "14 Personen schauen gerade" ist ein Fake-Skript. Es soll uns vorgaukeln, dass das Produkt extrem begehrt ist.</div>
+        <div class="analysis-item"><b>Zahlen:</b> Einkauf in China: 8,75€. Der Gewinn ist fast 4x so hoch wie der Warenwert.</div>
+      </div>
+      <button class="buy-btn" onclick="add('Earbuds', 44.99, 8.75)">In den Warenkorb</button>
+      <button class="glass-toggle" onclick="toggle(3)">👓 VWL-Brille aufsetzen</button>
+    </div>
+  </div>
 
-  <div class="p-card" id="p4">
-    <div class="p-img-box"><img src="images/ResistanceBands.jpg" class="p-img"></div>
-    <div class="p-info">
-      <h3>Fitness Resistance Bands</h3>
-      <div class="price-tag"><span class="old-p">49,00€</span><span class="new-p">19,95€</span></div>
-      <div class="fake-elements">
-        <span class="urgency">⚠️ Letzte Chance für Gratislieferung!</span>
-        <span class="reviews">⭐⭐⭐⭐⭐ (512 Bewertungen)</span>
-      </div>
-      <div class="truth-overlay">
-        <span class="truth-title">VWL-Analyse: Framing</span>
-        <div class="analysis-item"><b>Die Falle:</b> Die "Gratislieferung" wird als Geschenk präsentiert, dabei ist sie bereits im hohen Verkaufspreis (EK 3,95€) einkalkuliert.</div>
-        <div class="analysis-item"><b>Manipulation:</b> Wir bewerten den "Gratis-Vorteil" höher als den eigentlichen Preisvergleich.</div>
-      </div>
-      <button class="buy-btn" onclick="add('Bands', 19.95, 3.95)">In den Warenkorb</button>
-      <button class="glass-toggle" onclick="toggle(4)">👓 VWL-Brille aufsetzen</button>
-    </div>
-  </div>
+  <div class="p-card" id="p4">
+    <div class="p-img-box"><img src="images/ResistanceBands.jpg" class="p-img"></div>
+    <div class="p-info">
+      <h3>Fitness Resistance Bands</h3>
+      <div class="price-tag"><span class="old-p">49,00€</span><span class="new-p">19,95€</span></div>
+      <div class="fake-elements">
+        <span class="urgency">⚠️ Letzte Chance für Gratislieferung!</span>
+        <span class="reviews">⭐⭐⭐⭐⭐ (512 Bewertungen)</span>
+      </div>
+      <div class="truth-overlay">
+        <span class="truth-title">VWL-Analyse: Framing</span>
+        <div class="analysis-item"><b>Die Falle:</b> Die "Gratislieferung" wird als Geschenk präsentiert, dabei ist sie bereits im hohen Verkaufspreis (EK 3,95€) einkalkuliert.</div>
+        <div class="analysis-item"><b>Manipulation:</b> Wir bewerten den "Gratis-Vorteil" höher als den eigentlichen Preisvergleich.</div>
+      </div>
+      <button class="buy-btn" onclick="add('Bands', 19.95, 3.95)">In den Warenkorb</button>
+      <button class="glass-toggle" onclick="toggle(4)">👓 VWL-Brille aufsetzen</button>
+    </div>
+  </div>
 
-  <div class="p-card" id="p5">
-    <div class="badge">TREND 2026</div>
-    <div class="p-img-box"><img src="images/X1-black-2.webp" class="p-img"></div>
-    <div class="p-info">
-      <h3>Smart Watch X1</h3>
-      <div class="price-tag"><span class="old-p">159,00€</span><span class="new-p">79,99€</span></div>
-      <div class="fake-elements">
-        <span class="urgency">✓ Nur noch heute: Kostenloses Armband dazu!</span>
-        <span class="reviews">⭐⭐⭐⭐⭐ (2.104 Bewertungen)</span>
-      </div>
-      <div class="truth-overlay">
-        <span class="truth-title">VWL-Analyse: Design-Kopie</span>
-        <div class="analysis-item"><b>Die Falle:</b> Das Design kopiert teure Luxusmarken (Apple/Samsung). Wir übertragen unser Vertrauen in die Marke auf dieses Billig-Produkt.</div>
-        <div class="analysis-item"><b>F&E-Raub:</b> Der Anbieter spart Millionen an Forschungskosten durch simples Kopieren der Optik.</div>
-      </div>
-      <button class="buy-btn" onclick="add('Smart Watch', 79.99, 12.50)">In den Warenkorb</button>
-      <button class="glass-toggle" onclick="toggle(5)">👓 VWL-Brille aufsetzen</button>
-    </div>
-  </div>
+  <div class="p-card" id="p5">
+    <div class="badge">TREND 2026</div>
+    <div class="p-img-box"><img src="images/X1-black-2.webp" class="p-img"></div>
+    <div class="p-info">
+      <h3>Smart Watch X1</h3>
+      <div class="price-tag"><span class="old-p">159,00€</span><span class="new-p">79,99€</span></div>
+      <div class="fake-elements">
+        <span class="urgency">✓ Nur noch heute: Kostenloses Armband dazu!</span>
+        <span class="reviews">⭐⭐⭐⭐⭐ (2.104 Bewertungen)</span>
+      </div>
+      <div class="truth-overlay">
+        <span class="truth-title">VWL-Analyse: Design-Kopie</span>
+        <div class="analysis-item"><b>Die Falle:</b> Das Design kopiert teure Luxusmarken (Apple/Samsung). Wir übertragen unser Vertrauen in die Marke auf dieses Billig-Produkt.</div>
+        <div class="analysis-item"><b>F&E-Raub:</b> Der Anbieter spart Millionen an Forschungskosten durch simples Kopieren der Optik.</div>
+      </div>
+      <button class="buy-btn" onclick="add('Smart Watch', 79.99, 12.50)">In den Warenkorb</button>
+      <button class="glass-toggle" onclick="toggle(5)">👓 VWL-Brille aufsetzen</button>
+    </div>
+  </div>
 
-  <div class="p-card" id="p6">
-    <div class="p-img-box"><img src="images/Bemader.webp" class="p-img"></div>
-    <div class="p-info">
-      <h3>Cinema HD Projector</h3>
-      <div class="price-tag"><span class="old-p">129,99€</span><span class="new-p">64,95€</span></div>
-      <div class="fake-elements">
-        <span class="urgency">⚠️ Nur noch 2 Stück im Zentrallager!</span>
-        <span class="reviews">⭐⭐⭐⭐⭐ (942 Bewertungen)</span>
-      </div>
-      <div class="truth-overlay">
-        <span class="truth-title">VWL-Analyse: Informationsvorsprung</span>
-        <div class="analysis-item"><b>Die Falle:</b> "Zentrallager" klingt professionell, das Produkt wird aber einzeln aus Asien verschickt.</div>
-        <div class="analysis-item"><b>Transparenz:</b> Der Kunde hat keine Markttransparenz und glaubt den falschen Bestandsanzeigen.</div>
-      </div>
-      <button class="buy-btn" onclick="add('Projector', 64.95, 28.50)">In den Warenkorb</button>
-      <button class="glass-toggle" onclick="toggle(6)">👓 VWL-Brille aufsetzen</button>
-    </div>
-  </div>
+  <div class="p-card" id="p6">
+    <div class="p-img-box"><img src="images/Bemader.webp" class="p-img"></div>
+    <div class="p-info">
+      <h3>Cinema HD Projector</h3>
+      <div class="price-tag"><span class="old-p">129,99€</span><span class="new-p">64,95€</span></div>
+      <div class="fake-elements">
+        <span class="urgency">⚠️ Nur noch 2 Stück im Zentrallager!</span>
+        <span class="reviews">⭐⭐⭐⭐⭐ (942 Bewertungen)</span>
+      </div>
+      <div class="truth-overlay">
+        <span class="truth-title">VWL-Analyse: Informationsvorsprung</span>
+        <div class="analysis-item"><b>Die Falle:</b> "Zentrallager" klingt professionell, das Produkt wird aber einzeln aus Asien verschickt.</div>
+        <div class="analysis-item"><b>Transparenz:</b> Der Kunde hat keine Markttransparenz und glaubt den falschen Bestandsanzeigen.</div>
+      </div>
+      <button class="buy-btn" onclick="add('Projector', 64.95, 28.50)">In den Warenkorb</button>
+      <button class="glass-toggle" onclick="toggle(6)">👓 VWL-Brille aufsetzen</button>
+    </div>
+  </div>
 
 </div>
 
 <button class="cart-btn" onclick="openM()">🛒 <span class="cart-count" id="count">0</span></button>
 
 <div class="modal" id="mod">
-  <div class="modal-content">
-    <h2 style="margin-bottom:20px;">Ihre Bestellung</h2>
-    <div id="items" style="margin-bottom:20px; font-size:0.9rem; color:#475569;"></div>
-    <div style="background:#f1f5f9; padding:20px; border-radius:15px;">
-      <p style="display:flex; justify-content:space-between;">Umsatz: <b id="rev">0,00€</b></p>
-      <p style="display:flex; justify-content:space-between; color:var(--truth);">Händler-Profit: <b id="pro">0,00€</b></p>
-    </div>
-    <button class="buy-btn" style="background:#0f172a; margin-top:20px;" onclick="location.reload()">Lab Reset</button>
-    <button class="buy-btn" style="background:#f1f5f9; color:#1e293b; margin-top:10px;" onclick="closeM()">Schließen</button>
-  </div>
+  <div class="modal-content">
+    <h2 style="margin-bottom:20px;">Ihre Bestellung</h2>
+    <div id="items" style="margin-bottom:20px; font-size:0.9rem; color:#475569;"></div>
+    <div style="background:#f1f5f9; padding:20px; border-radius:15px;">
+      <p style="display:flex; justify-content:space-between;">Umsatz: <b id="rev">0,00€</b></p>
+      <p style="display:flex; justify-content:space-between; color:var(--truth);">Händler-Profit: <b id="pro">0,00€</b></p>
+    </div>
+    <button class="buy-btn" style="background:#0f172a; margin-top:20px;" onclick="location.reload()">Lab Reset</button>
+    <button class="buy-btn" style="background:#f1f5f9; color:#1e293b; margin-top:10px;" onclick="closeM()">Schließen</button>
+  </div>
 </div>
 
 <script>
-  let cart = [];
-  function toggle(id) {
-    const card = document.getElementById('p' + id);
-    card.classList.toggle('reveal-truth');
-    const btn = card.querySelector('.glass-toggle');
-    btn.innerText = card.classList.contains('reveal-truth') ? "Analyse ausblenden" : "👓 VWL-Brille aufsetzen";
-  }
+  let cart = [];
+  function toggle(id) {
+    const card = document.getElementById('p' + id);
+    card.classList.toggle('reveal-truth');
+    const btn = card.querySelector('.glass-toggle');
+    btn.innerText = card.classList.contains('reveal-truth') ? "Analyse ausblenden" : "👓 VWL-Brille aufsetzen";
+  }
 
-  function add(name, price, cost) {
-    cart.push({name, price, cost});
-    update();
-  }
+  function add(name, price, cost) {
+    cart.push({name, price, cost});
+    update();
+  }
 
-  function update() {
-    let r = 0, p = 0;
-    cart.forEach(i => { r += i.price; p += (i.price - i.cost); });
-    document.getElementById('count').innerText = cart.length;
-    document.getElementById('rev').innerText = r.toFixed(2).replace('.', ',') + "€";
-    document.getElementById('pro').innerText = p.toFixed(2).replace('.', ',') + "€";
-    document.getElementById('stats').innerHTML = `Umsatz: <b>${r.toFixed(2).replace('.', ',')}€</b> | Profit: <b style="color:#4ade80;">${p.toFixed(2).replace('.', ',')}€</b>`;
-    document.getElementById('items').innerHTML = cart.map(i => `• ${i.name}`).join('<br>');
-  }
+  function update() {
+    let r = 0, p = 0;
+    cart.forEach(i => { r += i.price; p += (i.price - i.cost); });
+    document.getElementById('count').innerText = cart.length;
+    document.getElementById('rev').innerText = r.toFixed(2).replace('.', ',') + "€";
+    document.getElementById('pro').innerText = p.toFixed(2).replace('.', ',') + "€";
+    document.getElementById('stats').innerHTML = `Umsatz: <b>${r.toFixed(2).replace('.', ',')}€</b> | Profit: <b style="color:#4ade80;">${p.toFixed(2).replace('.', ',')}€</b>`;
+    document.getElementById('items').innerHTML = cart.map(i => `• ${i.name}`).join('<br>');
+  }
 
-  function openM() { document.getElementById('mod').style.display = "flex"; }
-  function closeModal() { document.getElementById('mod').style.display = "none"; }
-  function closeM() { document.getElementById('mod').style.display = "none"; }
+  function openM() { document.getElementById('mod').style.display = "flex"; }
+  function closeModal() { document.getElementById('mod').style.display = "none"; }
+  function closeM() { document.getElementById('mod').style.display = "none"; }
 </script>
 
 </body>
